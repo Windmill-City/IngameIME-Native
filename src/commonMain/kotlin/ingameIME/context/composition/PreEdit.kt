@@ -7,12 +7,11 @@ import ingameIME.utils.Rect
 /**
  * PreEdit - Text to form [CandidateList]
  *
- * @param composition who it belongs to
  * @param defaultFontHeight fallback height of the bounding box
  * @param margin margin of the bounding box
  */
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class PreEdit(val composition: Composition, var defaultFontHeight: Int, margin: Margin) {
+abstract class PreEdit(var defaultFontHeight: Int, margin: Margin) {
     data class Context(
         /**
          * Content of the [PreEdit]

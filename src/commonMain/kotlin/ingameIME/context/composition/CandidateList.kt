@@ -5,10 +5,9 @@ typealias Candidate = String
 /**
  * Candidate List - Container of [Candidate]
  *
- * @param composition who it belongs to
  * @param content inner data storage
  */
-data class CandidateList(val composition: Composition, private val content: List<Candidate> = listOf()) :
+data class CandidateList(private val content: List<Candidate> = listOf()) :
     List<Candidate> by content {
 
     /**

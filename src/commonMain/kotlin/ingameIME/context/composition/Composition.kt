@@ -1,15 +1,11 @@
 package ingameIME.context.composition
 
-import ingameIME.context.IInputContext
 import ingameIME.utils.Observable
 
 /**
  * Composition - Manage state of [PreEdit] & [CandidateList]
- *
- * @param context who it belongs to
  */
 abstract class Composition(
-    val context: IInputContext,
     val preEdit: PreEdit,
 ) {
     /**
@@ -17,8 +13,7 @@ abstract class Composition(
      * Observable value
      * @see ingameIME.utils.setCallback
      */
-    @Suppress("LeakingThis")
-    val candidates by Observable(CandidateList(this, emptyList()))
+    val candidates by Observable(CandidateList(emptyList()))
 
     /**
      * If we have an active composition
