@@ -31,8 +31,10 @@ interface IInputContext {
      * Normally, we don't need to change active language, but display it on screen
      * User can use hotkey to change this themselves
      *
-     * As the input method(IM) always associate with the language, we just need to display language when no active IM
+     * As the input method(IM) always associate with the language, we just need to display
+     * active language when there is no active IM
      *
+     * May change by operating-system
      * Observable value
      * @see ingameIME.utils.setCallback
      */
@@ -46,6 +48,7 @@ interface IInputContext {
      *
      * User can use hotkey to change this themselves
      *
+     * May change by operating-system
      * Observable value
      * @see ingameIME.utils.setCallback
      */
@@ -59,9 +62,6 @@ interface IInputContext {
      *
      * Should call [IInputState.onApplyState] or [IInputState.onLeaveState] when changing
      * @see [ingameIME.context.inputState.stateOf]
-     *
-     * Observable value
-     * @see ingameIME.utils.setCallback
      */
     var imState: IIMState
 
@@ -79,6 +79,7 @@ interface IInputContext {
      * Should call [IInputState.onApplyState] or [IInputState.onLeaveState] when changing
      * @see [ingameIME.context.inputState.stateOf]
      *
+     * May change by input method
      * Observable value
      * @see ingameIME.utils.setCallback
      */
@@ -90,10 +91,16 @@ interface IInputContext {
      * Should call [IInputState.onApplyState] or [IInputState.onLeaveState] when changing
      * @see [ingameIME.context.inputState.stateOf]
      *
+     * May change by input method
      * Observable value
      * @see ingameIME.utils.setCallback
      */
     var sentenceMode: ISentenceMode
+
+    /**
+     * Listen for this to receive the conversion result of [Composition.preEdit]
+     */
+    var commitListener: ICommitListener
 
     /**
      * If in UI-Less Mode
@@ -106,9 +113,4 @@ interface IInputContext {
      * it is impossible to show another window on the screen at the same time
      */
     var uiLess: Boolean
-
-    /**
-     * Listen for this to receive the conversion result of [Composition.preEdit]
-     */
-    var commitListener: ICommitListener
 }

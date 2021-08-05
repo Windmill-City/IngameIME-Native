@@ -5,7 +5,7 @@ package ingameIME.context
  */
 interface ICommitListener {
     /**
-     * Call when input method commit
+     * Call from input method when commit
      *
      * @param commit the commit string
      */

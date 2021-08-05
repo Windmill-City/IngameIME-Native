@@ -20,19 +20,19 @@ interface IIngameIME {
     val defaultLanguageProfile: ILanguageProfile
 
     /**
-     * Stores all available input state actions
+     * System available input states
      *
      * @see ingameIME.context.inputState
      */
     val defaultInputStates: List<IInputState>
 
     /**
-     * Default IM state that allows input method
+     * Default IM state that can enable input method
      */
     val defaultAllowIM: IAllowIM
 
     /**
-     * Default IM state that dis-allow input method
+     * Default IM state that can disable input method
      */
     val defaultForbidIM: IForbidIM
 
