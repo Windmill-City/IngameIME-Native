@@ -20,6 +20,11 @@ interface IIngameIME {
     val defaultLanguageProfile: ILanguageProfile
 
     /**
+     * System available language profiles
+     */
+    val availableLanguageProfiles: List<ILanguageProfile>
+
+    /**
      * System available input states
      *
      * @see ingameIME.context.inputState
