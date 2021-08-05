@@ -1,0 +1,4 @@
+headers = ctfutb.h \
+          inputscope.h \
+          msctf.h \
+          textstor.h
