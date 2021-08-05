@@ -40,7 +40,7 @@ abstract class PreEdit(val composition: Composition, var defaultFontHeight: Int,
      * Observable value
      * @see ingameIME.utils.setCallback
      */
-    var context: Context by Observable(Context("", IntRange.EMPTY))
+    val context: Context by Observable(Context("", IntRange.EMPTY))
 
     /**
      * Margin of the bounding box

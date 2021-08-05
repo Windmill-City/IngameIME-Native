@@ -8,7 +8,7 @@ import ingameIME.utils.Observable
  *
  * @param context who it belongs to
  */
-class Composition(
+abstract class Composition(
     val context: IInputContext,
     val preEdit: PreEdit,
 ) {
@@ -17,6 +17,7 @@ class Composition(
      * Observable value
      * @see ingameIME.utils.setCallback
      */
+    @Suppress("LeakingThis")
     val candidates by Observable(CandidateList(this, emptyList()))
 
     /**
