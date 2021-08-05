@@ -7,29 +7,22 @@ import ingameIME.utils.Observable
  * Composition - Manage state of [PreEdit] & [CandidateList]
  *
  * @param context who it belongs to
- *
- * @Note Lock this object before access to any fields in it
  */
-abstract class Composition(
+class Composition(
     val context: IInputContext,
-    preEdit: PreEdit,
-    candidates: CandidateList
+    val preEdit: PreEdit,
 ) {
     /**
+     * Changes by input method
      * Observable value
      * @see ingameIME.utils.setCallback
      */
-    val preEdit by Observable(preEdit)
-
-    /**
-     * Observable value
-     * @see ingameIME.utils.setCallback
-     */
-    val candidates by Observable(candidates)
+    val candidates by Observable(CandidateList(this, emptyList()))
 
     /**
      * If we have an active composition
      *
+     * Changes by input method
      * Observable value
      * @see ingameIME.utils.setCallback
      */

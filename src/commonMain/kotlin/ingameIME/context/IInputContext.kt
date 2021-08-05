@@ -22,9 +22,6 @@ interface IInputContext {
 
     /**
      * Composition of the context
-     *
-     * Observable value
-     * @see ingameIME.utils.setCallback
      */
     val composition: Composition
 

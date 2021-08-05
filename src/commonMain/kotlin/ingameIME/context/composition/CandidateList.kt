@@ -1,14 +1,14 @@
 package ingameIME.context.composition
 
-import ingameIME.context.composition.CandidateList.Candidate
+typealias Candidate = String
 
 /**
  * Candidate List - Container of [Candidate]
  *
- * @param composition who it belongs to also act as a lock object
+ * @param composition who it belongs to
  * @param content inner data storage
  */
-abstract class CandidateList(val composition: Composition, private val content: List<Candidate> = listOf()) :
+data class CandidateList(val composition: Composition, private val content: List<Candidate> = listOf()) :
     List<Candidate> by content {
 
     /**
@@ -28,11 +28,4 @@ abstract class CandidateList(val composition: Composition, private val content: 
      * Index of [Candidate] on screen, start from 1
      */
     fun Candidate.getDisplayIndex() = this.getIndex() - displayRange.first + 1
-
-    /**
-     * Candidate item
-     *
-     * @param content candidate word
-     */
-    abstract class Candidate(val content: String)
 }
