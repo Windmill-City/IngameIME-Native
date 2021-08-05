@@ -111,6 +111,8 @@ interface IInputContext {
      *
      * @Note this should be true when the game is in full screen mode, as we directly write to the frame buffer,
      * it is impossible to show another window on the screen at the same time
+     *
+     * @Note this value can be changed on the fly
      */
     var uiLess: Boolean
 }
