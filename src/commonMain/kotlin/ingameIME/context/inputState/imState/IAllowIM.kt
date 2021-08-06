@@ -1,4 +1,4 @@
-package ingameIME.context.inputState
+package ingameIME.context.inputState.imState
 
 /**
  * [IIMState] that allows input method

@@ -1,9 +1,9 @@
 package ingameIME
 
 import ingameIME.context.IInputContext
-import ingameIME.context.inputState.IAllowIM
-import ingameIME.context.inputState.IForbidIM
 import ingameIME.context.inputState.IInputState
+import ingameIME.context.inputState.imState.IAllowIM
+import ingameIME.context.inputState.imState.IForbidIM
 import ingameIME.context.inputState.inputMode.conversion.IAlphaNumericMode
 import ingameIME.context.inputState.inputMode.conversion.INativeMode
 import ingameIME.profile.ILanguageProfile

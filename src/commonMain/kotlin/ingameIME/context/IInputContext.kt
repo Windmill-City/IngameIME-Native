@@ -1,9 +1,8 @@
 package ingameIME.context
 
-import ingameIME.IIngameIME
 import ingameIME.context.composition.Composition
-import ingameIME.context.inputState.IIMState
 import ingameIME.context.inputState.IInputState
+import ingameIME.context.inputState.imState.IIMState
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 import ingameIME.context.inputState.inputMode.sentence.ISentenceMode
 import ingameIME.profile.IInputMethodProfile
@@ -57,8 +56,8 @@ interface IInputContext {
      * Current [IIMState] of the context, set if input method is enabled
      *
      * @usage Assign a [IIMState] to change the active one
-     * @see [ingameIME.context.inputState.IAllowIM]
-     * @see [ingameIME.context.inputState.IForbidIM]
+     * @see [ingameIME.context.inputState.imState.IAllowIM]
+     * @see [ingameIME.context.inputState.imState.IForbidIM]
      *
      * Should call [IInputState.onApplyState] or [IInputState.onLeaveState] when changing
      * @see [ingameIME.context.inputState.stateOf]
