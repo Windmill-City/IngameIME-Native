@@ -1,8 +1,8 @@
 package ingameIME.context.composition
 
+import ingameIME.utils.BoundingBox
 import ingameIME.utils.Margin
 import ingameIME.utils.Observable
-import ingameIME.utils.Rect
 
 /**
  * PreEdit - Text to form [CandidateList]
@@ -61,8 +61,10 @@ abstract class PreEdit(var defaultFontHeight: Int, margin: Margin) {
      *
      * @Note When [context] is empty, we use [defaultFontHeight] as its height,
      * in case IM 's candidate list overlap the textbox
+     *
+     * @Note In screen position
      */
-    var boundingBox: Rect = Rect(0, 0, 0, defaultFontHeight)
+    var boundingBox: BoundingBox = BoundingBox(0, 0, 0, defaultFontHeight)
         get() = field.copy(
             x = field.x - margin.left,
             y = field.y - margin.top,
