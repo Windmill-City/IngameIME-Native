@@ -13,7 +13,8 @@ abstract class Composition(
      * Observable value
      * @see ingameIME.utils.setCallback
      */
-    val candidates by Observable(CandidateList(emptyList()))
+    var candidates by Observable(CandidateList(emptyList()))
+        protected set
 
     /**
      * If we have an active composition
@@ -22,5 +23,6 @@ abstract class Composition(
      * Observable value
      * @see ingameIME.utils.setCallback
      */
-    val composing: Boolean by Observable(false)
+    var composing: Boolean by Observable(false)
+        protected set
 }

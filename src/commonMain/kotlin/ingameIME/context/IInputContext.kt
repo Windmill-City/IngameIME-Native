@@ -15,11 +15,6 @@ import ingameIME.profile.ILanguageProfile
  */
 interface IInputContext {
     /**
-     * The creator of the context
-     */
-    val ingameIME: IIngameIME
-
-    /**
      * Composition of the context
      */
     val composition: Composition

@@ -3,15 +3,13 @@ package ingameIME.context.composition
 import ingameIME.utils.BoundingBox
 import ingameIME.utils.Margin
 import ingameIME.utils.Observable
+import kotlin.properties.Delegates
 
 /**
  * PreEdit - Text to form [CandidateList]
- *
- * @param defaultFontHeight fallback height of the bounding box
- * @param margin margin of the bounding box
  */
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class PreEdit(var defaultFontHeight: Int, margin: Margin) {
+abstract class PreEdit {
     data class Context(
         /**
          * Content of the [PreEdit]
@@ -39,14 +37,20 @@ abstract class PreEdit(var defaultFontHeight: Int, margin: Margin) {
      * Observable value
      * @see ingameIME.utils.setCallback
      */
-    val context: Context by Observable(Context("", IntRange.EMPTY))
+    var context: Context by Observable(Context("", IntRange.EMPTY))
+        protected set
+
+    /**
+     * Fallback height of the bounding box
+     */
+    var defaultFontHeight by Delegates.notNull<Int>()
 
     /**
      * Margin of the bounding box
      *
      * Make the candidate window not getting too close
      */
-    var margin: Margin = margin
+    var margin: Margin = Margin(0, 0, 0, 0)
         /**
          * If [context] is empty, we make the box no space, for better rendering experience
          */
@@ -64,7 +68,7 @@ abstract class PreEdit(var defaultFontHeight: Int, margin: Margin) {
      *
      * @Note In screen position
      */
-    var boundingBox: BoundingBox = BoundingBox(0, 0, 0, defaultFontHeight)
+    var boundingBox: BoundingBox = BoundingBox(0, 0, 0, 0)
         get() = field.copy(
             x = field.x - margin.left,
             y = field.y - margin.top,
