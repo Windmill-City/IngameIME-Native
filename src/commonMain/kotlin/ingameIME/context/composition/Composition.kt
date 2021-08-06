@@ -7,14 +7,8 @@ import ingameIME.utils.Observable
  */
 abstract class Composition(
     val preEdit: PreEdit,
+    val candidates: CandidateList,
 ) {
-    /**
-     * Changes by input method
-     * Observable value
-     * @see ingameIME.utils.setCallback
-     */
-    var candidates by Observable(CandidateList(emptyList()))
-        protected set
 
     /**
      * If we have an active composition
@@ -25,4 +19,9 @@ abstract class Composition(
      */
     var composing: Boolean by Observable(false)
         protected set
+
+    /**
+     * Terminate active composition
+     */
+    abstract fun terminate()
 }
