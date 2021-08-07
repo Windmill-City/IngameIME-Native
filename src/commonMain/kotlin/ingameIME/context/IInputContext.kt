@@ -93,7 +93,9 @@ interface IInputContext {
     var uiLess: Boolean
 
     /**
-     * Call this fun to dispose native handle
+     * Set this to true to dispose the context
+     *
+     * @Note Once you disposed, you can NOT re-construct another context on the same thread
      */
-    fun dispose()
+    var disposed: Boolean
 }
