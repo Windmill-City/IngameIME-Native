@@ -91,4 +91,9 @@ interface IInputContext {
      * @Note this value can be changed on the fly
      */
     var uiLess: Boolean
+
+    /**
+     * Call this fun to dispose native handle
+     */
+    fun dispose()
 }
