@@ -1,23 +1,27 @@
 package ingameIME.context.composition
 
-import ingameIME.utils.Observable
+typealias Commit = String
 
 /**
  * Composition - Manage state of [PreEdit] & [CandidateList]
  */
 abstract class Composition(
     val preEdit: PreEdit,
-    val candidates: CandidateList,
+    val candidateList: CandidateList,
 ) {
+    /**
+     * If user editing a composition
+     * when true [PreEdit] and [CandidateList] should be rendered
+     */
+    var composing: Boolean = false
+        protected set
 
     /**
-     * If we have an active composition
+     * Commit from input method, conversion result of [PreEdit] / punctuation / other user inputs
      *
-     * Changes by input method
-     * Observable value
-     * @see ingameIME.utils.setCallback
+     * @Note conversion of punctuation or some other inputs may not trigger [composing] change
      */
-    var composing: Boolean by Observable(false)
+    var commit: Commit = ""
         protected set
 
     /**

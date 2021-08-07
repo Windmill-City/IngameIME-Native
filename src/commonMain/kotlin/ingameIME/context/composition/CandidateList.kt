@@ -1,7 +1,5 @@
 package ingameIME.context.composition
 
-import ingameIME.utils.Observable
-
 typealias Candidate = String
 
 /**
@@ -32,10 +30,8 @@ abstract class CandidateList {
 
     /**
      * Changes by input method
-     * Observable value
-     * @see ingameIME.utils.setCallback
      */
-    var context: Context by Observable(Context(emptyList(), IntRange.EMPTY, -1))
+    var context: Context = Context(emptyList(), IntRange.EMPTY, -1)
         protected set
 
     /**

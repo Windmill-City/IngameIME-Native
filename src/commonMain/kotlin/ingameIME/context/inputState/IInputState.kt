@@ -1,7 +1,7 @@
 package ingameIME.context.inputState
 
 import ingameIME.context.IInputContext
-import ingameIME.utils.Observable
+import kotlin.properties.Delegates
 
 /**
  * Input State - Action on [IInputContext] when state change
@@ -17,7 +17,7 @@ interface IInputState {
  * Observable [IInputState] - Create property in [IInputContext]
  */
 fun <T : IInputState> IInputContext.stateOf(initialValue: T) =
-    Observable(initialValue) { _, oldValue, newValue ->
+    Delegates.observable(initialValue) { _, oldValue, newValue ->
         oldValue.onLeaveState(this)
         newValue.onApplyState(this)
     }

@@ -2,7 +2,6 @@ package ingameIME.context.composition
 
 import ingameIME.utils.BoundingBox
 import ingameIME.utils.Margin
-import ingameIME.utils.Observable
 import kotlin.properties.Delegates
 
 /**
@@ -34,10 +33,8 @@ abstract class PreEdit {
 
     /**
      * Changes by input method
-     * Observable value
-     * @see ingameIME.utils.setCallback
      */
-    var context: Context by Observable(Context("", IntRange.EMPTY))
+    var context: Context = Context("", IntRange.EMPTY)
         protected set
 
     /**

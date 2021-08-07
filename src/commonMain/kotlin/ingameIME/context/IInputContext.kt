@@ -27,10 +27,7 @@ interface IInputContext {
      *
      * As the input method(IM) always associate with the language, we just need to display
      * active language when there is no active IM
-     *
      * User can use system specified hotkey to change this
-     * Observable value
-     * @see ingameIME.utils.setCallback
      */
     var langProfile: ILanguageProfile
 
@@ -40,10 +37,7 @@ interface IInputContext {
      * @usage Assign a [IInputMethodProfile] to change the active one
      * Normally, we don't need to change active input method(IM),
      * but display what IM is on screen, like the conversion mode popup
-     *
      * User can use system specified hotkey to change this
-     * Observable value
-     * @see ingameIME.utils.setCallback
      */
     var inputMethod: IInputMethodProfile
 
@@ -70,10 +64,7 @@ interface IInputContext {
      *
      * Should call [IInputState.onApplyState] or [IInputState.onLeaveState] when changing
      * @see [ingameIME.context.inputState.stateOf]
-     *
-     * May change by input method
-     * Observable value
-     * @see ingameIME.utils.setCallback
+     * User can use system specified hotkey to change this
      */
     var conversionMode: IConversionMode
 
@@ -84,17 +75,9 @@ interface IInputContext {
      *
      * Should call [IInputState.onApplyState] or [IInputState.onLeaveState] when changing
      * @see [ingameIME.context.inputState.stateOf]
-     *
-     * May change by input method
-     * Observable value
-     * @see ingameIME.utils.setCallback
+     * User can use system specified hotkey to change this
      */
     var sentenceMode: ISentenceMode
-
-    /**
-     * Listen for this to receive the conversion result of [Composition.preEdit]
-     */
-    var commitListener: ICommitListener
 
     /**
      * If in UI-Less Mode
