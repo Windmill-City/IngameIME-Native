@@ -23,13 +23,14 @@ data class Margin(val left: Int, val right: Int, val top: Int, val bottom: Int) 
  *  2. A,B,C,D -> left, right, top, bottom
  */
 fun String.toMargin(): Margin {
-    Regex("""^(\d),(\d)(?:,(\d),(\d))?$""").matchEntire(this).apply {
-        if (this == null) throw AssertionError("Invalid margin syntax:$this")
+    Regex("""^(\d+),(\d+)(?:,(\d+),(\d+))?$""").matchEntire(this).apply {
+        if (this == null) throw AssertionError("Invalid margin syntax:${this@toMargin}")
+        val syntaxSecond = groupValues[3].isNotEmpty()
         return Margin(
-            this.groupValues[1].toInt(),
-            this.groupValues[if (groupValues.size == 5) 2 else 1].toInt(),
-            this.groupValues[if (groupValues.size == 5) 3 else 2].toInt(),
-            this.groupValues[if (groupValues.size == 5) 4 else 2].toInt()
+            groupValues[1].toInt(),
+            groupValues[if (syntaxSecond) 2 else 1].toInt(),
+            groupValues[if (syntaxSecond) 3 else 2].toInt(),
+            groupValues[if (syntaxSecond) 4 else 2].toInt()
         )
     }
 }
