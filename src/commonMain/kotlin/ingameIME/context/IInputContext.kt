@@ -12,6 +12,7 @@ import ingameIME.profile.ILanguageProfile
  * Input Context - Manage input method state
  *
  * @Note Input Context should be thread local
+ * @Note No more than one context in one thread
  */
 interface IInputContext {
     /**
