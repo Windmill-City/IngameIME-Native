@@ -31,7 +31,12 @@ abstract class CandidateList {
          * @see getIndex
          */
         val curSel: Int
-    )
+    ) {
+        /**
+         * If it has empty [content]
+         */
+        fun isEmpty(): Boolean = content.isEmpty()
+    }
 
     /**
      * Changes by input method
