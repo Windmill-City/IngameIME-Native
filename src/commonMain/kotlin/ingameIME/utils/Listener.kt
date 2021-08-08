@@ -1,29 +1,33 @@
 package ingameIME.utils
 
 /**
- * Listen for property set
+ * Listen for property changes
+ *
+ * @param T property's type
  */
 interface IListener<T> {
     /**
-     * Call on value change
+     * Called when the property is assigned
      *
-     * @param old old value
-     * @param new new value
-     * @return value to assign
+     * @param old old property
+     * @param new new property
+     * @return The value actually assigned
      */
     fun onChange(old: T, new: T): T
 }
 
-
+/**
+ * Container of listeners
+ */
 class ListenerHolder<T> : IListener<T> {
     private val listeners = arrayListOf<IListener<T>>()
 
     /**
-     * Call on value change
+     * Called when the property is assigned
      *
-     * @param old old value
-     * @param new new value
-     * @return value to assign
+     * @param old old property
+     * @param new new property
+     * @return The value actually assigned
      */
     @Suppress("NAME_SHADOWING")
     override fun onChange(old: T, new: T): T {
@@ -33,7 +37,7 @@ class ListenerHolder<T> : IListener<T> {
     }
 
     /**
-     * Add a new listener at the end
+     * Append to the end of the listener list
      *
      * @param listener the listener to add
      * @return true if the listener has been added
@@ -46,9 +50,9 @@ class ListenerHolder<T> : IListener<T> {
     }
 
     /**
-     * Add a new listener at the specified index
+     * Insert at the specified index of the listener list
      *
-     * @param index insert index
+     * @param index insertion point
      * @param listener the listener to add
      * @return true if the listener has been added
      *         false if it already in the list
@@ -60,7 +64,7 @@ class ListenerHolder<T> : IListener<T> {
     }
 
     /**
-     * Remove listener
+     * Remove from the listener list
      *
      * @param listener the listener to remove
      * @return true if the listener has been removed
@@ -71,17 +75,17 @@ class ListenerHolder<T> : IListener<T> {
     }
 
     /**
-     * @return index of specific listener or -1 if not exist
+     * @return index of specific listener in the list or -1 if not exist
      */
     fun indexOf(listener: IListener<T>): Int {
         return listeners.indexOf(listener)
     }
 
     /**
-     * Check if specified listener in the list
+     * Check if a specific listener is included in the listener list
      *
-     * @param listener the listener to check
-     * @return true if in else false
+     * @param listener to check
+     * @return true if it contains, false otherwise
      */
     fun hasListener(listener: IListener<T>): Boolean {
         return listeners.contains(listener)

@@ -49,7 +49,7 @@ abstract class PreEdit {
      */
     var margin: Margin = Margin(0, 0, 0, 0)
         /**
-         * If [context] is empty, we make the box no space, for better rendering experience
+         * If [context] is empty, we make the box no space, for better visual effect
          */
         get() {
             return if (context.isEmpty()) field.copy(left = 0, right = 0) else field

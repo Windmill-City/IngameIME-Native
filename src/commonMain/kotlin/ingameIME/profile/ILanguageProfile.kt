@@ -21,7 +21,7 @@ interface ILanguageProfile {
     val defaultInputMethod: IInputMethodProfile
 
     /**
-     * The input method the language profile carries
+     * Input methods this language profile contains
      */
     val inputMethods: List<IInputMethodProfile>
 }
