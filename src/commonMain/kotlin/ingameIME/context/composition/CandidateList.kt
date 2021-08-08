@@ -3,12 +3,12 @@ package ingameIME.context.composition
 typealias Candidate = String
 
 /**
- * Candidate List - Container of [Candidate]
+ * Candidate List - Container of [Candidate]s
  */
 abstract class CandidateList {
     data class Context(
         /**
-         * Candidate data, may contain more data than display range
+         * [Candidate]s, may contain more data than display range
          */
         val content: List<Candidate>,
 
@@ -23,6 +23,11 @@ abstract class CandidateList {
 
         /**
          * Current selected [Candidate]'s index
+         *
+         * The [Candidate] that will be [Commit]ed when user press space key.
+         * input method will send commit event if needed, so we don't need to handling commit here
+         * use the value here for some visual effect that telling user what [Candidate] they're selecting
+         *
          * @see getIndex
          */
         val curSel: Int
@@ -35,7 +40,10 @@ abstract class CandidateList {
         protected set
 
     /**
-     * Select another [Candidate] by assign a new index
+     * Select another [Candidate] by its index
+     *
+     * We need to call [setSelection] when user selects [Candidate]s by hovering the mouse
+     * if we do the rendering job
      *
      * @param index of [Candidate] to select
      * @see getIndex to get the index
@@ -43,6 +51,19 @@ abstract class CandidateList {
      * @Note should in the range of [Context.displayRange]
      */
     abstract fun setSelection(index: Int)
+
+    /**
+     * [Commit] specific [Candidate] by its index
+     *
+     * We need to call [setFinalize] when user selects [Candidate]s by clicking the mouse
+     * if we do the rendering job
+     *
+     * @param index of [Candidate] to [Commit]
+     * @see getIndex to get the index
+     *
+     * @Note should in the range of [Context.displayRange]
+     */
+    abstract fun setFinalize(index: Int)
 
     /**
      * Index of [Candidate] for selecting
