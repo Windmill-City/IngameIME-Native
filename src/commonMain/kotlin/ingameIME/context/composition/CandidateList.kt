@@ -36,6 +36,11 @@ abstract class CandidateList {
          * If it has empty [content]
          */
         fun isEmpty(): Boolean = content.isEmpty()
+
+        /**
+         * If [content] not empty
+         */
+        fun isNotEmpty(): Boolean = content.isNotEmpty()
     }
 
     /**
