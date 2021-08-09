@@ -71,10 +71,14 @@ abstract class PreEdit {
      * @Note In screen position
      */
     var boundingBox: BoundingBox = BoundingBox(0, 0, 0, 0)
-        get() = field.copy(
-            x = field.x - margin.left,
-            y = field.y - margin.top,
-            width = field.width + margin.width,
-            height = if (context.isEmpty()) defaultFontHeight else field.height + margin.height
-        )
+        get() {
+            //Ensure defaultFontHeight is initialized
+            defaultFontHeight
+            return field.copy(
+                x = field.x - margin.left,
+                y = field.y - margin.top,
+                width = field.width + margin.width,
+                height = if (context.isEmpty()) defaultFontHeight else field.height + margin.height
+            )
+        }
 }
