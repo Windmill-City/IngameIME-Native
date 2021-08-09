@@ -1,7 +1,5 @@
-package utils
+package ingameIME.utils
 
-import ingameIME.utils.Margin
-import ingameIME.utils.toMargin
 import kotlin.test.Test
 import kotlin.test.asserter
 

@@ -78,7 +78,7 @@ abstract class PreEdit {
                 x = field.x - margin.left,
                 y = field.y - margin.top,
                 width = field.width + margin.width,
-                height = if (context.isEmpty()) defaultFontHeight else field.height + margin.height
+                height = (if (context.isEmpty()) defaultFontHeight else field.height) + margin.height
             )
         }
 }
