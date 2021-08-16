@@ -1,0 +1,4 @@
+headers = E:/Codes/IngameIME-Native/src/win32Main/resources/libtf/libtfdef.h \
+          E:/Codes/IngameIME-Native/src/win32Main/resources/libtf/libtf.h    \
+          msctf.h
+linkerOpts = -LE:/Codes/IngameIME-Native/src/win32Main/resources/libtf -llibtf -lole32 -loleaut32

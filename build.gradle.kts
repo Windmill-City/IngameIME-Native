@@ -9,6 +9,12 @@ version = "0.1.0"
 
 repositories {
     mavenCentral()
+    maven("https://maven.pkg.github.com/Dominaezzz/kgl") {
+        credentials {
+            username = System.getenv("GITHUB_USER")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 kotlin {
@@ -27,9 +33,9 @@ kotlin {
         hostOs == "Linux" -> linuxX64("linux")
         isMingwX64 -> {
             mingwX64("win32") {
-                val tf by compilations.getByName("main").cinterops.creating {
-                    defFile(project.file("src/win32Main/resources/TextServiceFramework.def"))
-                    packageName("platform.win32.tf")
+                val libtf by compilations.getByName("main").cinterops.creating {
+                    defFile(project.file("src/win32Main/resources/libtf/libtf.def"))
+                    packageName("platform.win32.libtf")
                 }
             }
         }
@@ -41,6 +47,14 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("co.touchlab:kermit:0.1.9")
+                val kglVersion = "0.1.+"
+                api("com.kgl:kgl-core:$kglVersion")
+                api("com.kgl:kgl-glfw:$kglVersion")
+                api("com.kgl:kgl-glfw-static:$kglVersion") // For GLFW static binaries
+                api("com.kgl:kgl-opengl:$kglVersion")
+                api("com.kgl:kgl-vulkan:$kglVersion")
+                api("com.kgl:kgl-glfw-vulkan:$kglVersion")
+                api("com.kgl:kgl-stb:$kglVersion")
             }
         }
         val commonTest by getting {
