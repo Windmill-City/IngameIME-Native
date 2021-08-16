@@ -11,6 +11,11 @@ import kotlin.properties.Delegates
 interface IInputState {
     fun onApplyState(context: IInputContext) {}
     fun onLeaveState(context: IInputContext) {}
+
+    /**
+     * If the state can co-exist with the state in
+     */
+    fun accept(state: IInputState): Boolean
 }
 
 /**

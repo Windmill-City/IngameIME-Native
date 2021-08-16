@@ -3,6 +3,7 @@ package ingameIME.context
 import ingameIME.context.composition.Composition
 import ingameIME.context.inputState.IInputState
 import ingameIME.context.inputState.imState.IIMState
+import ingameIME.context.inputState.inputMode.MultiState
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 import ingameIME.context.inputState.inputMode.sentence.ISentenceMode
 import ingameIME.profile.IInputMethodProfile
@@ -63,11 +64,8 @@ interface IInputContext {
      *
      * When IM is enabled, we need to tell user what current mode is by showing
      * a popup(last for 3-5 seconds) on screen
-     *
-     * Should call [IInputState.onApplyState] or [IInputState.onLeaveState] when changing
-     * @see [ingameIME.context.inputState.stateOf]
      */
-    var conversionMode: IConversionMode
+    val conversionMode: MultiState<IConversionMode>
 
     /**
      * Current [ISentenceMode] of the context
@@ -75,11 +73,8 @@ interface IInputContext {
      * @usage Assign a new value to change the active one
      * Normally, we don't need to change it, but just display which it is on the screen
      * User can change this by system specified hotkey
-     *
-     * Should call [IInputState.onApplyState] or [IInputState.onLeaveState] when changing
-     * @see [ingameIME.context.inputState.stateOf]
      */
-    var sentenceMode: ISentenceMode
+    val sentenceMode: MultiState<ISentenceMode>
 
     /**
      * If in UI-Less Mode

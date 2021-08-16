@@ -10,4 +10,11 @@ interface IConversionMode : IInputState
 /**
  * Fallback value of [IConversionMode]
  */
-object UnknownConversionMode : IConversionMode
+object UnknownConversionMode : IConversionMode {
+    /**
+     * Always conflicts with others, so it can be removed when apply new states
+     */
+    override fun accept(state: IInputState): Boolean {
+        return false
+    }
+}
