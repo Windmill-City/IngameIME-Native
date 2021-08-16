@@ -6,8 +6,8 @@ import ingameIME.context.inputState.imState.IIMState
 import ingameIME.context.inputState.inputMode.MultiState
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 import ingameIME.context.inputState.inputMode.sentence.ISentenceMode
-import ingameIME.profile.IInputMethodProfile
-import ingameIME.profile.ILanguageProfile
+import ingameIME.profile.IInputProcessorProfile
+import ingameIME.utils.IDispose
 
 /**
  * Input Context - Manage input method state
@@ -15,33 +15,20 @@ import ingameIME.profile.ILanguageProfile
  * @Note Context should be thread local
  * @Note A thread can create at most one context
  */
-interface IInputContext {
+interface IInputContext : IDispose {
     /**
      * [Composition] of the context
      */
     val composition: Composition
 
     /**
-     * Current active language profile of the context
-     *
-     * @usage Assign a new value to change the active one
-     * Normally, we don't need to change it, but just display which it is on the screen
-     * User can change this by system specified hotkey
-     *
-     * As the input method(IM) always associate with the active language, we just need to display
-     * active language when there is no active IM
-     * @see ingameIME.profile.UnknownInputMethodProfile
-     */
-    var langProfile: ILanguageProfile
-
-    /**
-     * Current active input method of the context
+     * Current active input processor of the context
      *
      * @usage Assign a new value to change the active one
      * Normally, we don't need to change it, but just display which it is on the screen
      * User can change this by system specified hotkey
      */
-    var inputMethod: IInputMethodProfile
+    var inputProcessor: IInputProcessorProfile
 
     /**
      * Current [IIMState] of the context, set if input method is enabled
@@ -89,11 +76,4 @@ interface IInputContext {
      * but it is suggested to call [Composition.terminate] after this value has changed
      */
     var uiLess: Boolean
-
-    /**
-     * Set to true to dispose the context
-     *
-     * @Note Once you disposed, you can NOT re-construct another context on the same thread
-     */
-    var disposed: Boolean
 }
