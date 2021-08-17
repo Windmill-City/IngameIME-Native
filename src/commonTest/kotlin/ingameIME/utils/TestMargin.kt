@@ -1,18 +1,16 @@
 package ingameIME.utils
 
 import kotlin.test.Test
-import kotlin.test.asserter
+import kotlin.test.assertEquals
 
 class TestMargin {
     @Test
     fun testToMargin() {
-        asserter.assertEquals(
-            "Syntax A,B",
+        assertEquals(
             Margin(10, 10, 5, 5),
             "10,5".toMargin()
         )
-        asserter.assertEquals(
-            "Syntax A,B,C,D",
+        assertEquals(
             Margin(10, 20, 5, 15),
             "10,20,5,15".toMargin()
         )

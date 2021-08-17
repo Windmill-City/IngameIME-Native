@@ -3,8 +3,8 @@ package ingameIME.context.composition
 import ingameIME.utils.BoundingBox
 import ingameIME.utils.Margin
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFails
-import kotlin.test.asserter
 
 class TestPreEdit {
     class TestPreEdit : PreEdit() {
@@ -27,8 +27,7 @@ class TestPreEdit {
         val err = assertFails {
             preEdit.boundingBox
         }
-        asserter.assertEquals(
-            "Not init font height not throws",
+        assertEquals(
             "Property defaultFontHeight should be initialized before get.",
             err.message
         )
@@ -40,8 +39,7 @@ class TestPreEdit {
         val err = assertFails {
             preEdit.boundingBox
         }
-        asserter.assertEquals(
-            "Not init font height not throws",
+        assertEquals(
             "Property defaultFontHeight should be initialized before get.",
             err.message
         )
@@ -52,8 +50,7 @@ class TestPreEdit {
         preEdit.setEmptyCtx()
         val fontHeight = 10
         preEdit.defaultFontHeight = fontHeight
-        asserter.assertEquals(
-            "bounding box",
+        assertEquals(
             BoundingBox(0, 0, 0, 10),
             preEdit.boundingBox
         )
@@ -63,8 +60,7 @@ class TestPreEdit {
     fun testGetBoundingBoxHasDefaultFontHeightNotEmptyCtx() {
         preEdit.setNotEmptyCtx()
         preEdit.defaultFontHeight = fontHeight
-        asserter.assertEquals(
-            "bounding box",
+        assertEquals(
             BoundingBox(0, 0, 0, 0),
             preEdit.boundingBox
         )
@@ -75,8 +71,7 @@ class TestPreEdit {
         preEdit.defaultFontHeight = fontHeight
         preEdit.margin = margin
         preEdit.setEmptyCtx()
-        asserter.assertEquals(
-            "bounding box",
+        assertEquals(
             BoundingBox(0, -20, 0, fontHeight + margin.height),
             preEdit.boundingBox
         )
@@ -87,8 +82,7 @@ class TestPreEdit {
         preEdit.defaultFontHeight = fontHeight
         preEdit.margin = margin
         preEdit.setNotEmptyCtx()
-        asserter.assertEquals(
-            "bounding box",
+        assertEquals(
             BoundingBox(-5, -20, margin.width, margin.height),
             preEdit.boundingBox
         )
