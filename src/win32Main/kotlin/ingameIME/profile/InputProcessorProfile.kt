@@ -1,9 +1,6 @@
 package ingameIME.profile
 
-import ingameIME.win32.succeedOrThr
-import ingameIME.win32.toBSTR
-import ingameIME.win32.toFormattedString
-import ingameIME.win32.toKString
+import ingameIME.win32.*
 import kotlinx.cinterop.*
 import platform.win32.libtf.libtf_InputProcessorProfile_t
 import platform.win32.libtf.libtf_get_input_processor_desc
@@ -17,12 +14,14 @@ import platform.windows.BSTRVar
 actual fun Locale.getName(): String {
     memScoped {
         val name: BSTRVar = this.alloc()
-        libtf_get_locale_name(this@getName.toBSTR(), name.ptr).succeedOrThr()
+        this@getName.withBSTR {
+            libtf_get_locale_name(it, name.ptr).succeedOrThr()
+        }
         return name.toKString()
     }
 }
 
-data class InputProcessorProfile(val nativeProfile: libtf_InputProcessorProfile_t) : IInputProcessorProfile {
+abstract class InputProcessorProfile(val nativeProfile: libtf_InputProcessorProfile_t) : IInputProcessorProfile {
     /**
      * Locale of the profile
      */
@@ -56,18 +55,40 @@ data class InputProcessorProfile(val nativeProfile: libtf_InputProcessorProfile_
             nativeHeap.free(nativeProfile)
             field = true
         }
+}
 
+class KeyboardLayout(nativeProfile: libtf_InputProcessorProfile_t) :
+    InputProcessorProfile(nativeProfile), IKeyBoardLayout {
     override fun toString(): String {
-        return "[win32]InputProcessor[$locale][${nativeProfile.clsid.toFormattedString()}]:$name"
+        return "InputProcessor[Win32][HKL][${
+            nativeProfile.hkl.toLong().toFormattedString()
+        }][$locale][${locale.getName()}]:$name"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is InputProcessorProfile) return false
-        return other.nativeProfile.clsid == this.nativeProfile.clsid
+        return other.nativeProfile.hkl.toLong() == this.nativeProfile.hkl.toLong()
     }
 
     override fun hashCode(): Int {
-        return nativeProfile.clsid.hashCode()
+        return nativeProfile.hkl.toLong().hashCode()
+    }
+}
+
+class TextService(nativeProfile: libtf_InputProcessorProfile_t) :
+    InputProcessorProfile(nativeProfile), IInputMethodProfile {
+    override fun toString(): String {
+        return "InputProcessor[Win32][TIP][${nativeProfile.clsid.toFormattedString()}][$locale][${locale.getName()}]:$name"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is InputProcessorProfile) return false
+        return other.nativeProfile.clsid.isEqual(this.nativeProfile.clsid)
+    }
+
+    override fun hashCode(): Int {
+        return nativeProfile.clsid.getHashCode()
     }
 }

@@ -47,14 +47,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("co.touchlab:kermit:0.1.9")
-                val kglVersion = "0.1.+"
-                api("com.kgl:kgl-core:$kglVersion")
-                api("com.kgl:kgl-glfw:$kglVersion")
-                api("com.kgl:kgl-glfw-static:$kglVersion") // For GLFW static binaries
-                api("com.kgl:kgl-opengl:$kglVersion")
-                api("com.kgl:kgl-vulkan:$kglVersion")
-                api("com.kgl:kgl-glfw-vulkan:$kglVersion")
-                api("com.kgl:kgl-stb:$kglVersion")
             }
         }
         val commonTest by getting {
@@ -74,7 +66,18 @@ kotlin {
                 val linuxTest by getting
             }
             isMingwX64 -> {
-                val win32Main by getting
+                val win32Main by getting {
+                    dependencies {
+                        val kglVersion = "0.1.11"
+                        api("com.kgl:kgl-core:$kglVersion")
+                        api("com.kgl:kgl-glfw:$kglVersion")
+                        api("com.kgl:kgl-glfw-static:$kglVersion") // For GLFW static binaries
+                        api("com.kgl:kgl-opengl:$kglVersion")
+                        api("com.kgl:kgl-vulkan:$kglVersion")
+                        api("com.kgl:kgl-glfw-vulkan:$kglVersion")
+                        api("com.kgl:kgl-stb:$kglVersion")
+                    }
+                }
                 val win32Test by getting
             }
         }
