@@ -9,4 +9,4 @@ package ingameIME.context.inputState.inputMode.conversion
  * In full-shape mode, they take up two standard char position
  * In half-shape mode, they take up one position as normal
  */
-interface IFullShapeMode
+interface IFullShapeMode : IConversionMode

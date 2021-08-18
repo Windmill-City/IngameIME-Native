@@ -1,5 +1,7 @@
 package ingameIME.context.inputState.inputMode.conversion.jap
 
+import ingameIME.context.inputState.inputMode.conversion.IConversionMode
+
 /**
  * If input method in Roman mode
  *
@@ -9,4 +11,4 @@ package ingameIME.context.inputState.inputMode.conversion.jap
  * @see ingameIME.context.composition.PreEdit
  * @see ingameIME.context.composition.Candidate
  */
-interface IRomanMode
+interface IRomanMode : IConversionMode

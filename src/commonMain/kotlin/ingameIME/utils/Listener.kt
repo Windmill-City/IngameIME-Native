@@ -5,7 +5,7 @@ package ingameIME.utils
  *
  * @param T property's type
  */
-interface IListener<T> {
+fun interface IListener<T> {
     /**
      * Called when the property is assigned
      *
