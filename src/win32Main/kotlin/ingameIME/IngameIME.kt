@@ -6,13 +6,11 @@ import ingameIME.context.inputState.imState.IForbidIM
 import ingameIME.context.inputState.inputMode.conversion.IAlphaNumericMode
 import ingameIME.context.inputState.inputMode.conversion.INativeMode
 import ingameIME.profile.IInputProcessorProfile
-import ingameIME.profile.KeyboardLayout
-import ingameIME.profile.TextService
+import ingameIME.profile.toWrappedProfile
 import ingameIME.win32.succeedOrThr
 import kotlinx.cinterop.*
 import platform.posix.memcpy
 import platform.posix.uint32_tVar
-import platform.win32.libtf.TF_PROFILETYPE_INPUTPROCESSOR
 import platform.win32.libtf.libtf_InputProcessorProfile_t
 import platform.win32.libtf.libtf_get_input_processors
 
@@ -37,10 +35,7 @@ object IngameIME : IIngameIME {
                     profiles[i].apply {
                         val profile: libtf_InputProcessorProfile_t = nativeHeap.alloc()
                         memcpy(profile.ptr, profiles[i].ptr, sizeOf<libtf_InputProcessorProfile_t>().toULong())
-                        result.add(
-                            if (profile.dwProfileType.toInt() == TF_PROFILETYPE_INPUTPROCESSOR) TextService(profile)
-                            else KeyboardLayout(profile)
-                        )
+                        result.add(profile.toWrappedProfile())
                     }
                 return result
             }

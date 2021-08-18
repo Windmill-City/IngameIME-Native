@@ -75,6 +75,25 @@ class TestInputProcessorProfile {
     }
 
     @Test
+    fun testToWrapped() {
+        memScoped {
+            val profile: libtf_InputProcessorProfile_t = this.alloc()
+
+            //Text Service
+            profile.dwProfileType = TF_PROFILETYPE_INPUTPROCESSOR.toUInt()
+            assertTrue { profile.toWrappedProfile() is IInputMethodProfile }
+
+            //Keyboard Layout
+            profile.dwProfileType = TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt()
+            assertTrue { profile.toWrappedProfile() is IKeyBoardLayout }
+
+            //Unknown
+            profile.dwProfileType = 0.toUInt()
+            assertFails { profile.toWrappedProfile() }
+        }
+    }
+
+    @Test
     fun testGetName() {
         tipMicrosoftPinyin.name.apply(::println)
         hklAmericanKeyboard.name.apply(::println)

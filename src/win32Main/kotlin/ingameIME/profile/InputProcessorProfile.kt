@@ -2,10 +2,7 @@ package ingameIME.profile
 
 import ingameIME.win32.*
 import kotlinx.cinterop.*
-import platform.win32.libtf.libtf_InputProcessorProfile_t
-import platform.win32.libtf.libtf_get_input_processor_desc
-import platform.win32.libtf.libtf_get_input_processor_locale
-import platform.win32.libtf.libtf_get_locale_name
+import platform.win32.libtf.*
 import platform.windows.BSTRVar
 
 /**
@@ -90,5 +87,16 @@ class TextService(nativeProfile: libtf_InputProcessorProfile_t) :
 
     override fun hashCode(): Int {
         return nativeProfile.clsid.getHashCode()
+    }
+}
+
+/**
+ * Convert native profile to wrapped profile base on its type
+ */
+fun libtf_InputProcessorProfile_t.toWrappedProfile(): InputProcessorProfile {
+    return when (dwProfileType) {
+        TF_PROFILETYPE_INPUTPROCESSOR.toUInt() -> TextService(this)
+        TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt() -> KeyboardLayout(this)
+        else -> throw Error("Unsupported profile type:$dwProfileType")
     }
 }
