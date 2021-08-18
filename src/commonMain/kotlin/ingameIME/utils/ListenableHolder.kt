@@ -10,7 +10,13 @@ open class ListenableHolder<T>(initialValue: T) : ListenerHolder<T>() {
      * Set new value to the property
      */
     open fun setProperty(newValue: T) {
-        onChange(content, newValue)
+        setPropertyInternal(onChange(content, newValue))
+    }
+
+    /**
+     * Set value without triggering callback
+     */
+    fun setPropertyInternal(newValue: T) {
         content = newValue
     }
 
