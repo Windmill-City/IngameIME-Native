@@ -7,7 +7,8 @@ import ingameIME.utils.ListenableHolder
 /**
  * Holder of input context current state
  */
-open class StateHolder<T : IInputState>(private val inputContext: IInputContext, initialValue: T) :
+@Suppress("MemberVisibilityCanBePrivate")
+open class StateHolder<T : IInputState>(protected val inputContext: IInputContext, initialValue: T) :
     ListenableHolder<T>(initialValue) {
     /**
      * Leave the old state and apply the new state when the state changes
