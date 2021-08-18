@@ -6,13 +6,13 @@ import ingameIME.utils.Margin
 import kotlin.properties.Delegates
 
 /**
- * PreEdit - Text to form [CandidateList]
+ * PreEdit - Text to form [ACandidateList]
  */
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class PreEdit {
+abstract class APreEdit {
     data class Context(
         /**
-         * Content of the [PreEdit]
+         * Content of the [APreEdit]
          *
          * Application should draw this on screen
          * Application should update [boundingBox] when this change
@@ -20,7 +20,7 @@ abstract class PreEdit {
         val content: String,
 
         /**
-         * Selection of the [PreEdit]
+         * Selection of the [APreEdit]
          *
          * Application should draw caret or selection of the [content] with it
          */

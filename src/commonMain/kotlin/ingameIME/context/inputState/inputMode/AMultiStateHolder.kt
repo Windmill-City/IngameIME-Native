@@ -7,7 +7,7 @@ import ingameIME.utils.ListenableHolder
 /**
  * Holder of input context current states
  */
-abstract class MultiStateHolder<T : IInputState>(private val inputContext: IInputContext, initialValue: List<T>) :
+abstract class AMultiStateHolder<T : IInputState>(private val inputContext: IInputContext, initialValue: List<T>) :
     ListenableHolder<List<T>>(initialValue) {
     /**
      * Apply new state to the input method

@@ -1,8 +1,8 @@
 package ingameIME.context
 
-import ingameIME.context.composition.Composition
+import ingameIME.context.composition.AComposition
 import ingameIME.context.inputState.imState.IIMState
-import ingameIME.context.inputState.inputMode.MultiStateHolder
+import ingameIME.context.inputState.inputMode.AMultiStateHolder
 import ingameIME.context.inputState.inputMode.StateHolder
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 import ingameIME.context.inputState.inputMode.sentence.ISentenceMode
@@ -18,9 +18,9 @@ import ingameIME.utils.ListenableHolder
  */
 interface IInputContext : IDispose {
     /**
-     * [Composition] of the context
+     * [AComposition] of the context
      */
-    val composition: Composition
+    val composition: AComposition
 
     /**
      * Current active input processor of the context
@@ -50,7 +50,7 @@ interface IInputContext : IDispose {
      * When IM is enabled, we need to tell user what current mode is by showing
      * a popup(last for 3-5 seconds) on screen
      */
-    val conversionMode: MultiStateHolder<IConversionMode>
+    val conversionMode: AMultiStateHolder<IConversionMode>
 
     /**
      * Current [ISentenceMode] of the context
@@ -59,19 +59,19 @@ interface IInputContext : IDispose {
      * Normally, we don't need to change it, but just display which it is on the screen
      * User can change this by system specified hotkey
      */
-    val sentenceMode: MultiStateHolder<ISentenceMode>
+    val sentenceMode: AMultiStateHolder<ISentenceMode>
 
     /**
      * If in UI-Less Mode
      *
      * When set to true, input method(IM)'s
-     * [Composition] Window and [ingameIME.context.composition.CandidateList] Window will not draw
+     * [AComposition] Window and [ingameIME.context.composition.ACandidateList] Window will not draw
      *
      * @Note this should be set to true when the game is in full screen mode,
      * it is impossible to show another window on the screen as we directly write to the frame buffer
      *
      * @Note This value can be changed at any time,
-     * but it is suggested to call [Composition.terminate] after this value has changed
+     * but it is suggested to call [AComposition.terminate] after this value has changed
      */
     var uiLess: Boolean
 }

@@ -6,14 +6,14 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
-class TestPreEdit {
-    class TestPreEdit : PreEdit() {
+class TestAPreEdit {
+    class TestPreEdit : APreEdit() {
         fun setNotEmptyCtx() {
-            context = Context("123", IntRange.EMPTY)
+            context.setProperty(Context("123", IntRange.EMPTY))
         }
 
         fun setEmptyCtx() {
-            context = Context("", IntRange.EMPTY)
+            context.setProperty(Context("", IntRange.EMPTY))
         }
     }
 

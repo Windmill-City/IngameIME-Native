@@ -5,20 +5,20 @@ import ingameIME.utils.ListenableHolder
 typealias Commit = String
 
 /**
- * Composition - Manage state of [PreEdit] & [CandidateList]
+ * Composition - Manage state of [APreEdit] & [ACandidateList]
  */
-abstract class Composition(
-    val preEdit: PreEdit,
-    val candidateList: CandidateList,
+abstract class AComposition(
+    val preEdit: APreEdit,
+    val candidateList: ACandidateList,
 ) {
     /**
      * If user editing a composition
-     * when true [PreEdit] and [CandidateList] should be rendered
+     * when true [APreEdit] and [ACandidateList] should be rendered
      */
     val composing: ListenableHolder<Boolean> = ListenableHolder(false)
 
     /**
-     * Commit from input method, conversion result of [PreEdit] / punctuation / other user inputs
+     * Commit from input method, conversion result of [APreEdit] / punctuation / other user inputs
      *
      * @Note conversion of punctuation or some other inputs may not trigger [composing] change
      */

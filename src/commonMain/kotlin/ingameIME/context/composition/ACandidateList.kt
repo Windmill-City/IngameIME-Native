@@ -7,7 +7,7 @@ typealias Candidate = String
 /**
  * Candidate List - Container of [Candidate]s
  */
-abstract class CandidateList {
+abstract class ACandidateList {
     data class Context(
         /**
          * [Candidate]s, may contain more data than display range
