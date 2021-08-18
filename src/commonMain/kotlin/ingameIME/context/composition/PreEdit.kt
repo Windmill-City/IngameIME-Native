@@ -1,6 +1,7 @@
 package ingameIME.context.composition
 
 import ingameIME.utils.BoundingBox
+import ingameIME.utils.ListenableHolder
 import ingameIME.utils.Margin
 import kotlin.properties.Delegates
 
@@ -39,8 +40,7 @@ abstract class PreEdit {
     /**
      * Changes by input method
      */
-    var context: Context = Context("", IntRange.EMPTY)
-        protected set
+    val context: ListenableHolder<Context> = ListenableHolder(Context("", IntRange.EMPTY))
 
     /**
      * Fallback height of the bounding box
@@ -57,7 +57,7 @@ abstract class PreEdit {
          * If [context] is empty, we make the box no space, for better visual effect
          */
         get() {
-            return if (context.isEmpty()) field.copy(left = 0, right = 0) else field
+            return if (context.getProperty().isEmpty()) field.copy(left = 0, right = 0) else field
         }
 
     /**
@@ -78,7 +78,7 @@ abstract class PreEdit {
                 x = field.x - margin.left,
                 y = field.y - margin.top,
                 width = field.width + margin.width,
-                height = (if (context.isEmpty()) defaultFontHeight else field.height) + margin.height
+                height = (if (context.getProperty().isEmpty()) defaultFontHeight else field.height) + margin.height
             )
         }
 }

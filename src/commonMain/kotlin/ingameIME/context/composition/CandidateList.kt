@@ -1,5 +1,7 @@
 package ingameIME.context.composition
 
+import ingameIME.utils.ListenableHolder
+
 typealias Candidate = String
 
 /**
@@ -46,8 +48,7 @@ abstract class CandidateList {
     /**
      * Changes by input method
      */
-    var context: Context = Context(emptyList(), IntRange.EMPTY, -1)
-        protected set
+    val context: ListenableHolder<Context> = ListenableHolder(Context(emptyList(), IntRange.EMPTY, -1))
 
     /**
      * Select another [Candidate] by its index

@@ -19,7 +19,7 @@ interface IListener<T> {
 /**
  * Container of listeners
  */
-class ListenerHolder<T> : IListener<T> {
+open class ListenerHolder<T> : IListener<T> {
     private val listeners = arrayListOf<IListener<T>>()
 
     /**

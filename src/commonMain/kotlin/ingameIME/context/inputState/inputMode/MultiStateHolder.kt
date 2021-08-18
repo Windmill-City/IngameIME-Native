@@ -1,11 +1,14 @@
 package ingameIME.context.inputState.inputMode
 
+import ingameIME.context.IInputContext
 import ingameIME.context.inputState.IInputState
+import ingameIME.utils.ListenableHolder
 
 /**
- * Holds input method current states
+ * Holder of input context current states
  */
-abstract class MultiState<T : IInputState> {
+abstract class MultiStateHolder<T : IInputState>(private val inputContext: IInputContext, initialValue: List<T>) :
+    ListenableHolder<List<T>>(initialValue) {
     /**
      * Apply new state to the input method
      * The states who conflict with the new one will be removed
