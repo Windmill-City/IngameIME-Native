@@ -9,10 +9,10 @@ import kotlin.properties.Delegates
  * PreEdit - Text to form [ACandidateList]
  */
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class APreEdit {
+class PreEdit {
     data class Context(
         /**
-         * Content of the [APreEdit]
+         * Content of the [PreEdit]
          *
          * Application should draw this on screen
          * Application should update [boundingBox] when this change
@@ -20,7 +20,7 @@ abstract class APreEdit {
         val content: String,
 
         /**
-         * Selection of the [APreEdit]
+         * Selection of the [PreEdit]
          *
          * Application should draw caret or selection of the [content] with it
          */

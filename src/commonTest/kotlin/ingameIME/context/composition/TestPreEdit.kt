@@ -7,23 +7,21 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
 class TestAPreEdit {
-    class TestPreEdit : APreEdit() {
-        fun setNotEmptyCtx() {
-            context.setProperty(Context("123", IntRange.EMPTY))
-        }
-
-        fun setEmptyCtx() {
-            context.setProperty(Context("", IntRange.EMPTY))
-        }
-    }
-
     private val margin = Margin(5, 5, 20, 20)
     private val fontHeight = 10
-    private val preEdit = TestPreEdit()
+    private val preEdit = PreEdit()
+
+    private fun setNotEmptyCtx() {
+        preEdit.context.setProperty(PreEdit.Context("123", IntRange.EMPTY))
+    }
+
+    private fun setEmptyCtx() {
+        preEdit.context.setProperty(PreEdit.Context("", IntRange.EMPTY))
+    }
 
     @Test
     fun testGetBoundingBoxNoDefaultFontHeightEmptyCtx() {
-        preEdit.setEmptyCtx()
+        setEmptyCtx()
         val err = assertFails {
             preEdit.boundingBox
         }
@@ -35,7 +33,7 @@ class TestAPreEdit {
 
     @Test
     fun testGetBoundingBoxNoDefaultFontHeightNotEmptyCtx() {
-        preEdit.setNotEmptyCtx()
+        setNotEmptyCtx()
         val err = assertFails {
             preEdit.boundingBox
         }
@@ -47,7 +45,7 @@ class TestAPreEdit {
 
     @Test
     fun testGetBoundingBoxHasDefaultFontHeightEmptyCtx() {
-        preEdit.setEmptyCtx()
+        setEmptyCtx()
         val fontHeight = 10
         preEdit.defaultFontHeight = fontHeight
         assertEquals(
@@ -58,7 +56,7 @@ class TestAPreEdit {
 
     @Test
     fun testGetBoundingBoxHasDefaultFontHeightNotEmptyCtx() {
-        preEdit.setNotEmptyCtx()
+        setNotEmptyCtx()
         preEdit.defaultFontHeight = fontHeight
         assertEquals(
             BoundingBox(0, 0, 0, 0),
@@ -70,7 +68,7 @@ class TestAPreEdit {
     fun testGetBoundingBoxEmptyCtxWithMargin() {
         preEdit.defaultFontHeight = fontHeight
         preEdit.margin = margin
-        preEdit.setEmptyCtx()
+        setEmptyCtx()
         assertEquals(
             BoundingBox(0, -20, 0, fontHeight + margin.height),
             preEdit.boundingBox
@@ -81,7 +79,7 @@ class TestAPreEdit {
     fun testGetBoundingBoxNotEmptyCtxWithMargin() {
         preEdit.defaultFontHeight = fontHeight
         preEdit.margin = margin
-        preEdit.setNotEmptyCtx()
+        setNotEmptyCtx()
         assertEquals(
             BoundingBox(-5, -20, margin.width, margin.height),
             preEdit.boundingBox
