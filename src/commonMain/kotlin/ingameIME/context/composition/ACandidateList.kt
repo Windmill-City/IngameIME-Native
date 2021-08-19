@@ -79,10 +79,11 @@ abstract class ACandidateList {
     /**
      * Index of [Candidate] for selecting
      */
-    open fun Context.getIndex(candidate: Candidate) = this.content.indexOf(candidate)
+    open fun getIndex(context: Context, candidate: Candidate) = context.content.indexOf(candidate)
 
     /**
      * Index of [Candidate] for display, start from 1
      */
-    open fun Context.getDisplayIndex(candidate: Candidate) = this.getIndex(candidate) - this.displayRange.first + 1
+    open fun getDisplayIndex(context: Context, candidate: Candidate) =
+        getIndex(context, candidate) - context.displayRange.first + 1
 }
