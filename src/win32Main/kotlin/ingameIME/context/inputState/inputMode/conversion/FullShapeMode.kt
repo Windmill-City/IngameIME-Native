@@ -25,7 +25,7 @@ object FullShapeMode : IFullShapeMode, ITfConversionMode {
      * Check whether the current mode contains itself
      */
     override fun check(mode: libtf_ConversionMode): Boolean {
-        return mode.toInt() and TF_CONVERSIONMODE_FULLSHAPE == 1
+        return mode and TF_CONVERSIONMODE_FULLSHAPE == 1
     }
 
     override fun onApplyState(context: IInputContext) {
@@ -33,7 +33,7 @@ object FullShapeMode : IFullShapeMode, ITfConversionMode {
             memScoped {
                 val mode: libtf_ConversionModeVar = this.alloc()
                 libtf_get_conversion_mode(it.nativeContext.value, mode.ptr).succeedOrThr()
-                mode.value = mode.value or TF_CONVERSIONMODE_FULLSHAPE.toUInt()
+                mode.value = mode.value or TF_CONVERSIONMODE_FULLSHAPE
                 libtf_set_conversion_mode(it.nativeContext.value, mode.value).succeedOrThr()
             }
         }

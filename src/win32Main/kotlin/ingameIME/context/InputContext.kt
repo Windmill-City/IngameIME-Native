@@ -19,6 +19,7 @@ import ingameIME.utils.ListenableHolder
 import ingameIME.win32.succeedOrThr
 import ingameIME.win32.toKString
 import kotlinx.cinterop.*
+import platform.posix.memcpy
 import platform.win32.libtf.*
 import platform.windows.HWND
 import platform.zlib.voidpVar
@@ -282,7 +283,11 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
             staticCFunction { profile: libtf_InputProcessorProfile_t, _: voidpVar ->
                 if (profile.activated)
                     with(instanceOfInputContext) {
-                        with(profile.toWrappedProfile()) {
+                        //Copy data to heap
+                        val heapProfile: libtf_InputProcessorProfile_t = nativeHeap.alloc()
+                        memcpy(heapProfile.ptr, profile.ptr, sizeOf<libtf_InputProcessorProfile_t>().toULong())
+
+                        with(heapProfile.toWrappedProfile()) {
                             inputProcessor.onChange(inputProcessor.getProperty(), this)
                             inputProcessor.setPropertyInternal(this)
                         }

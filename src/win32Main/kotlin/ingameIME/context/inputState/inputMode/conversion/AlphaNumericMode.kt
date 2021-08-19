@@ -25,7 +25,7 @@ object AlphaNumericMode : IAlphaNumericMode, ITfConversionMode {
      * Check whether the current mode contains itself
      */
     override fun check(mode: libtf_ConversionMode): Boolean {
-        return mode == TF_CONVERSIONMODE_ALPHANUMERIC.toUInt()
+        return mode == TF_CONVERSIONMODE_ALPHANUMERIC
     }
 
     override fun onApplyState(context: IInputContext) {
@@ -33,7 +33,7 @@ object AlphaNumericMode : IAlphaNumericMode, ITfConversionMode {
             memScoped {
                 libtf_set_conversion_mode(
                     it.nativeContext.value,
-                    TF_CONVERSIONMODE_ALPHANUMERIC.toUInt()
+                    TF_CONVERSIONMODE_ALPHANUMERIC
                 ).succeedOrThr()
             }
         }
