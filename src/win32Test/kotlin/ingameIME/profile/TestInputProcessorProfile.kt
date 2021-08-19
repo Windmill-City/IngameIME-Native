@@ -27,10 +27,10 @@ class TestInputProcessorProfile {
 
         run {
             val profile: libtf_InputProcessorProfile_t = nativeHeap.alloc()
-            profile.dwProfileType = TF_PROFILETYPE_INPUTPROCESSOR.toUInt()
+            profile.profileType = TF_PROFILETYPE_INPUTPROCESSOR.toUInt()
 
             //zh-CN
-            profile.langid = 2052.toUShort()
+            profile.langId = 2052.toUShort()
 
             //CLSID of Microsoft Pinyin
             profile.clsid.Data1 = 0x81d4e9c9.toUInt()
@@ -62,10 +62,10 @@ class TestInputProcessorProfile {
         }
         run {
             val profile: libtf_InputProcessorProfile_t = nativeHeap.alloc()
-            profile.dwProfileType = TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt()
+            profile.profileType = TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt()
 
             //en-US
-            profile.langid = 1033.toUShort()
+            profile.langId = 1033.toUShort()
 
             //HKL of American Keyboard
             profile.hkl = 0x0409_0409.toLong().toCPointer()
@@ -80,15 +80,15 @@ class TestInputProcessorProfile {
             val profile: libtf_InputProcessorProfile_t = this.alloc()
 
             //Text Service
-            profile.dwProfileType = TF_PROFILETYPE_INPUTPROCESSOR.toUInt()
+            profile.profileType = TF_PROFILETYPE_INPUTPROCESSOR.toUInt()
             assertTrue { profile.toWrappedProfile() is IInputMethodProfile }
 
             //Keyboard Layout
-            profile.dwProfileType = TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt()
+            profile.profileType = TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt()
             assertTrue { profile.toWrappedProfile() is IKeyBoardLayout }
 
             //Unknown
-            profile.dwProfileType = 0.toUInt()
+            profile.profileType = 0.toUInt()
             assertFails { profile.toWrappedProfile() }
         }
     }

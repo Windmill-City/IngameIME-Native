@@ -94,9 +94,9 @@ class TextService(nativeProfile: libtf_InputProcessorProfile_t) :
  * Convert native profile to wrapped profile base on its type
  */
 fun libtf_InputProcessorProfile_t.toWrappedProfile(): InputProcessorProfile {
-    return when (dwProfileType) {
+    return when (profileType) {
         TF_PROFILETYPE_INPUTPROCESSOR.toUInt() -> TextService(this)
         TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt() -> KeyboardLayout(this)
-        else -> throw Error("Unsupported profile type:$dwProfileType")
+        else -> throw Error("Unsupported profile type:$profileType")
     }
 }

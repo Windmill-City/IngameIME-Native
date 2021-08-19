@@ -1,10 +1,14 @@
 package ingameIME
 
 import ingameIME.context.inputState.IInputState
+import ingameIME.context.inputState.imState.AllowIM
+import ingameIME.context.inputState.imState.ForbidIM
 import ingameIME.context.inputState.imState.IAllowIM
 import ingameIME.context.inputState.imState.IForbidIM
-import ingameIME.context.inputState.inputMode.conversion.IAlphaNumericMode
-import ingameIME.context.inputState.inputMode.conversion.INativeMode
+import ingameIME.context.inputState.inputMode.conversion.*
+import ingameIME.context.inputState.inputMode.conversion.jap.HiraganaMode
+import ingameIME.context.inputState.inputMode.conversion.jap.KatakanaMode
+import ingameIME.context.inputState.inputMode.conversion.jap.RomanMode
 import ingameIME.profile.IInputProcessorProfile
 import ingameIME.profile.toWrappedProfile
 import ingameIME.win32.succeedOrThr
@@ -47,29 +51,39 @@ object IngameIME : IIngameIME {
      * @see ingameIME.context.inputState
      */
     override val availableInputStates: List<IInputState>
-        get() = TODO("Not yet implemented")
+        get() = listOf(
+            AllowIM,
+            ForbidIM,
+            AlphaNumericMode,
+            NativeMode,
+            HalfShapeMode,
+            FullShapeMode,
+            RomanMode,
+            KatakanaMode,
+            HiraganaMode
+        )
 
     /**
      * Default IM state that can enable input method
      */
     override val defaultAllowIM: IAllowIM
-        get() = TODO("Not yet implemented")
+        get() = AllowIM
 
     /**
      * Default IM state that can disable input method
      */
     override val defaultForbidIM: IForbidIM
-        get() = TODO("Not yet implemented")
+        get() = ForbidIM
 
     /**
      * Default Conversion Mode that sets [IAlphaNumericMode]
      */
     override val defaultAlphaNumericMode: IAlphaNumericMode
-        get() = TODO("Not yet implemented")
+        get() = AlphaNumericMode
 
     /**
      * Default Conversion Mode that sets [INativeMode]
      */
     override val defaultNativeMode: INativeMode
-        get() = TODO("Not yet implemented")
+        get() = NativeMode
 }
