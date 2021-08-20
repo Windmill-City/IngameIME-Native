@@ -66,7 +66,8 @@ kotlin {
                 val linuxTest by getting
             }
             isMingwX64 -> {
-                val win32Main by getting {
+                val win32Main by getting
+                val win32Test by getting {
                     dependencies {
                         val kglVersion = "0.1.11"
                         api("com.kgl:kgl-core:$kglVersion")
@@ -78,7 +79,6 @@ kotlin {
                         api("com.kgl:kgl-stb:$kglVersion")
                     }
                 }
-                val win32Test by getting
             }
         }
     }
