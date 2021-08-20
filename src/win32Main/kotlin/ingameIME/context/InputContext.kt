@@ -290,8 +290,8 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
     }
 
     /**
-     * It's required to call this method when the window received WM_SETFOCUS or WM_KILLFOCUS to
-     * set the correct input method state
+     * It's required to call this method to set the correct input method state,
+     * when the window received WM_SETFOCUS or WM_KILLFOCUS
      *
      * @param hWnd Win32 handle of the window
      * @param msg can be WM_SETFOCUS or WM_KILLFOCUS
