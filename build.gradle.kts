@@ -39,6 +39,12 @@ kotlin {
                     defFile(project.file("src/win32Main/resources/libtf/libtf.def"))
                     packageName("platform.win32.libtf")
                 }
+
+                binaries {
+                    sharedLib {
+                        baseName = "libIngameIME"
+                    }
+                }
             }
         }
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
