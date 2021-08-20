@@ -11,7 +11,9 @@ repositories {
     mavenCentral()
     maven("https://maven.pkg.github.com/Dominaezzz/kgl") {
         credentials {
+            //Your GitHub Email
             username = System.getenv("GITHUB_USER")
+            //Your GitHub Access token with permission read_pkg
             password = System.getenv("GITHUB_TOKEN")
         }
     }
