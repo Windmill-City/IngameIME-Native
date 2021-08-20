@@ -1,5 +1,7 @@
 package ingameIME.context.inputState.inputMode.conversion
 
+import ingameIME.context.inputState.IInputState
+
 /**
  * If input method in half shape mode
  *
@@ -9,4 +11,14 @@ package ingameIME.context.inputState.inputMode.conversion
  * In full-shape mode, they take up two standard char position
  * In half-shape mode, they take up one position as normal
  */
-interface IHalfShapeMode : IConversionMode
+interface IHalfShapeMode : IConversionMode {
+    /**
+     * If the state can co-exist with the state in
+     */
+    override fun accept(state: IInputState): Boolean {
+        return when (state) {
+            is IFullShapeMode -> false
+            else -> true
+        }
+    }
+}

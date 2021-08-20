@@ -2,7 +2,6 @@ package ingameIME.context.inputState.inputMode.conversion
 
 import ingameIME.context.IInputContext
 import ingameIME.context.InputContext
-import ingameIME.context.inputState.IInputState
 import ingameIME.win32.succeedOrThr
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.value
@@ -11,16 +10,6 @@ import platform.win32.libtf.libtf_ConversionMode
 import platform.win32.libtf.libtf_set_conversion_mode
 
 object AlphaNumericMode : IAlphaNumericMode, ITfConversionMode {
-    /**
-     * If the state can co-exist with the state in
-     */
-    override fun accept(state: IInputState): Boolean {
-        return when (state) {
-            is INativeMode -> false
-            else -> true
-        }
-    }
-
     /**
      * Check whether the current mode contains itself
      */

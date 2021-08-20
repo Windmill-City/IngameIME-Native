@@ -2,7 +2,6 @@ package ingameIME.context.inputState.inputMode.conversion.jap
 
 import ingameIME.context.IInputContext
 import ingameIME.context.InputContext
-import ingameIME.context.inputState.IInputState
 import ingameIME.context.inputState.inputMode.conversion.ITfConversionMode
 import ingameIME.win32.succeedOrThr
 import kotlinx.cinterop.alloc
@@ -12,16 +11,6 @@ import kotlinx.cinterop.value
 import platform.win32.libtf.*
 
 object HiraganaMode : IHiraganaMode, ITfConversionMode {
-    /**
-     * If the state can co-exist with the state in
-     */
-    override fun accept(state: IInputState): Boolean {
-        return when (state) {
-            is IRomanMode, is IKatakanaMode -> false
-            else -> true
-        }
-    }
-
     /**
      * Check whether the current mode contains itself
      */

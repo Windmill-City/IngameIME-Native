@@ -1,5 +1,6 @@
 package ingameIME.context.inputState.inputMode.conversion.jap
 
+import ingameIME.context.inputState.IInputState
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 
 /**
@@ -11,4 +12,14 @@ import ingameIME.context.inputState.inputMode.conversion.IConversionMode
  * @see ingameIME.context.composition.PreEdit
  * @see ingameIME.context.composition.Candidate
  */
-interface IHiraganaMode : IConversionMode
+interface IHiraganaMode : IConversionMode {
+    /**
+     * If the state can co-exist with the state in
+     */
+    override fun accept(state: IInputState): Boolean {
+        return when (state) {
+            is IKatakanaMode, is IRomanMode -> false
+            else -> true
+        }
+    }
+}

@@ -2,7 +2,6 @@ package ingameIME.context.inputState.inputMode.conversion
 
 import ingameIME.context.IInputContext
 import ingameIME.context.InputContext
-import ingameIME.context.inputState.IInputState
 import ingameIME.win32.succeedOrThr
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
@@ -11,16 +10,6 @@ import kotlinx.cinterop.value
 import platform.win32.libtf.*
 
 object HalfShapeMode : IHalfShapeMode, ITfConversionMode {
-    /**
-     * If the state can co-exist with the state in
-     */
-    override fun accept(state: IInputState): Boolean {
-        return when (state) {
-            is IFullShapeMode -> false
-            else -> true
-        }
-    }
-
     /**
      * Check whether the current mode contains itself
      */
