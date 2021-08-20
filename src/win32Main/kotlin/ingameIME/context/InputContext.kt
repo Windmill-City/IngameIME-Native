@@ -42,7 +42,8 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
     /**
      * [AComposition] of the context
      */
-    override val composition: AComposition
+    override val composition: AComposition =
+        Composition(this, PreEdit().apply { this.defaultFontHeight = defaultFontHeight }, CandidateList(this))
 
     /**
      * Current active input processor of the context
@@ -123,12 +124,6 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
     init {
         //Create native context
         libtf_create_ctx(nativeContext.ptr).succeedOrThr()
-
-        //Initial data objects
-        with(PreEdit()) {
-            this.defaultFontHeight = defaultFontHeight
-            composition = Composition(this@InputContext, this, CandidateList(this@InputContext))
-        }
 
         //Initial active inputProcessor
         inputProcessor = run {
