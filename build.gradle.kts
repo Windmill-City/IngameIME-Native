@@ -78,6 +78,17 @@ kotlin {
                         api("com.kgl:kgl-glfw-vulkan:$kglVersion")
                         api("com.kgl:kgl-stb:$kglVersion")
                     }
+
+                    tasks.register<Copy>("copyLibtf") {
+                        with(tasks["win32Test"]) {
+                            val dstDir = inputs.files.filter { it.canExecute() }.asPath.substringBeforeLast("\\")
+                            val dll = project.file("src/win32Main/resources/libtf/libtf.dll")
+                            println("Copy from $dll to $dstDir")
+                            from(dll)
+                            into(dstDir)
+                        }
+                    }
+                    tasks["win32Test"].dependsOn("copyLibtf")
                 }
             }
         }
