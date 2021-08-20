@@ -4,4 +4,11 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="adopt-openj9-16" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
+  <component name="SuppressABINotification">
+    <option name="modulesWithSuppressedNotConfigured">
+      <set>
+        <option value="IngameIME-Native" />
+      </set>
+    </option>
+  </component>
 </project>

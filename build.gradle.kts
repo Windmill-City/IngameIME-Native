@@ -37,6 +37,13 @@ kotlin {
             mingwX64("win32") {
                 val libtf by compilations.getByName("main").cinterops.creating {
                     defFile(project.file("src/win32Main/resources/libtf/libtf.def"))
+                    headers(
+                        project.files(
+                            "src/win32Main/resources/libtf/libtf.h",
+                            "src/win32Main/resources/libtf/libtfdef.h",
+                            "src/win32Main/resources/libtf/msctf.h"
+                        )
+                    )
                     packageName("platform.win32.libtf")
                 }
 
@@ -89,7 +96,8 @@ kotlin {
 
                     tasks.register<Copy>("copyLibtf") {
                         with(tasks["win32Test"]) {
-                            val dstDir = inputs.files.filter { it.canExecute() }.asPath.substringBeforeLast("\\")
+                            val dstDir =
+                                inputs.files.filter { it.endsWith("test.exe") }.asPath.substringBeforeLast("\\")
                             val dll = project.file("src/win32Main/resources/libtf/libtf.dll")
                             println("Copy from $dll to $dstDir")
                             from(dll)

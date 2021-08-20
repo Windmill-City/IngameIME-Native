@@ -9,6 +9,7 @@ import kotlinx.coroutines.MainScope
 import platform.windows.GetForegroundWindow
 import platform.windows.WM_SETFOCUS
 import kotlin.test.BeforeTest
+import kotlin.test.Ignore
 import kotlin.test.Test
 
 class TestInputContext {
@@ -76,6 +77,7 @@ class TestInputContext {
     }
 
     @Test
+    @Ignore
     fun triggerRunTest() {
     }
 }
