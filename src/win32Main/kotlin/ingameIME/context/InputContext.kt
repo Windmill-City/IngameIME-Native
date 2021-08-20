@@ -2,9 +2,9 @@ package ingameIME.context
 
 import ingameIME.IngameIME
 import ingameIME.context.composition.*
+import ingameIME.context.inputState.MultiStateHolder
+import ingameIME.context.inputState.StateHolder
 import ingameIME.context.inputState.imState.IIMState
-import ingameIME.context.inputState.inputMode.MultiStateHolder
-import ingameIME.context.inputState.inputMode.StateHolder
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 import ingameIME.context.inputState.inputMode.conversion.jap.HiraganaMode
 import ingameIME.context.inputState.inputMode.sentence.ISentenceMode

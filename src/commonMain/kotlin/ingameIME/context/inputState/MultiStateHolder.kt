@@ -1,7 +1,6 @@
-package ingameIME.context.inputState.inputMode
+package ingameIME.context.inputState
 
 import ingameIME.context.IInputContext
-import ingameIME.context.inputState.IInputState
 import ingameIME.utils.ListenableHolder
 
 /**

@@ -1,9 +1,9 @@
 package ingameIME.context
 
 import ingameIME.context.composition.AComposition
+import ingameIME.context.inputState.MultiStateHolder
+import ingameIME.context.inputState.StateHolder
 import ingameIME.context.inputState.imState.IIMState
-import ingameIME.context.inputState.inputMode.MultiStateHolder
-import ingameIME.context.inputState.inputMode.StateHolder
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 import ingameIME.context.inputState.inputMode.sentence.ISentenceMode
 import ingameIME.profile.IInputProcessorProfile
