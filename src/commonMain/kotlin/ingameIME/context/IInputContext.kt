@@ -2,7 +2,7 @@ package ingameIME.context
 
 import ingameIME.context.composition.AComposition
 import ingameIME.context.inputState.imState.IIMState
-import ingameIME.context.inputState.inputMode.AMultiStateHolder
+import ingameIME.context.inputState.inputMode.MultiStateHolder
 import ingameIME.context.inputState.inputMode.StateHolder
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 import ingameIME.context.inputState.inputMode.sentence.ISentenceMode
@@ -50,7 +50,7 @@ interface IInputContext : IDispose {
      * When IM is enabled, we need to tell user what current mode is by showing
      * a popup(last for 3-5 seconds) on screen
      */
-    val conversionMode: AMultiStateHolder<IConversionMode>
+    val conversionMode: MultiStateHolder<IConversionMode>
 
     /**
      * Current [ISentenceMode] of the context
@@ -59,7 +59,7 @@ interface IInputContext : IDispose {
      * Normally, we don't need to change it, but just display which it is on the screen
      * User can change this by system specified hotkey
      */
-    val sentenceMode: AMultiStateHolder<ISentenceMode>
+    val sentenceMode: MultiStateHolder<ISentenceMode>
 
     /**
      * If in UI-Less Mode

@@ -8,7 +8,7 @@ import ingameIME.utils.ListenableHolder
  * Holder of input context current states
  */
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class AMultiStateHolder<T : IInputState>(protected val inputContext: IInputContext, initialValue: List<T>) :
+open class MultiStateHolder<T : IInputState>(protected val inputContext: IInputContext, initialValue: List<T>) :
     ListenableHolder<List<T>>(initialValue) {
     /**
      * Apply new state to the input method

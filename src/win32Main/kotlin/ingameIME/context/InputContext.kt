@@ -3,15 +3,13 @@ package ingameIME.context
 import ingameIME.IngameIME
 import ingameIME.context.composition.*
 import ingameIME.context.inputState.imState.IIMState
-import ingameIME.context.inputState.inputMode.AMultiStateHolder
+import ingameIME.context.inputState.inputMode.MultiStateHolder
 import ingameIME.context.inputState.inputMode.StateHolder
-import ingameIME.context.inputState.inputMode.conversion.ConversionStateHolder
 import ingameIME.context.inputState.inputMode.conversion.IConversionMode
 import ingameIME.context.inputState.inputMode.conversion.jap.HiraganaMode
-import ingameIME.context.inputState.inputMode.conversion.toWrappedConversionMode
 import ingameIME.context.inputState.inputMode.sentence.ISentenceMode
-import ingameIME.context.inputState.inputMode.sentence.SentenceStateHolder
-import ingameIME.context.inputState.inputMode.sentence.toWrappedSentenceMode
+import ingameIME.context.inputState.inputMode.toWrappedConversionMode
+import ingameIME.context.inputState.inputMode.toWrappedSentenceMode
 import ingameIME.profile.IInputProcessorProfile
 import ingameIME.profile.InputProcessorProfile
 import ingameIME.profile.toWrappedProfile
@@ -73,7 +71,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
      * When IM is enabled, we need to tell user what current mode is by showing
      * a popup(last for 3-5 seconds) on screen
      */
-    override val conversionMode: AMultiStateHolder<IConversionMode>
+    override val conversionMode: MultiStateHolder<IConversionMode>
 
     /**
      * Current [ISentenceMode] of the context
@@ -82,7 +80,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
      * Normally, we don't need to change it, but just display which it is on the screen
      * User can change this by system specified hotkey
      */
-    override val sentenceMode: AMultiStateHolder<ISentenceMode>
+    override val sentenceMode: MultiStateHolder<ISentenceMode>
 
     /**
      * If in UI-Less Mode
@@ -150,14 +148,14 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
         conversionMode = memScoped {
             val curMode: libtf_ConversionModeVar = this.alloc()
             libtf_get_conversion_mode(nativeContext.value, curMode.ptr).succeedOrThr()
-            ConversionStateHolder(this@InputContext, curMode.value.toWrappedConversionMode())
+            MultiStateHolder(this@InputContext, curMode.value.toWrappedConversionMode())
         }
 
         //Initial Sentence State
         sentenceMode = memScoped {
             val curMode: libtf_SentenceModeVar = this.alloc()
             libtf_get_sentence_mode(nativeContext.value, curMode.ptr).succeedOrThr()
-            SentenceStateHolder(this@InputContext, curMode.value.toWrappedSentenceMode())
+            MultiStateHolder(this@InputContext, curMode.value.toWrappedSentenceMode())
         }
 
         //Register callbacks
