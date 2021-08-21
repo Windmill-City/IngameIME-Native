@@ -15,6 +15,7 @@ import ingameIME.utils.ListenableHolder
  *
  * @Note Context should be thread local
  * @Note A thread can create at most one context
+ * @Note Once disposed, you can't recreate once more
  */
 interface IInputContext : IDispose {
     /**
