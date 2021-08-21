@@ -30,9 +30,7 @@ fun BSTR.toKString(autoFree: Boolean = true): String {
  * Convert BSTRVar to Kotlin String
  */
 fun BSTRVar.toKString(autoFree: Boolean = true): String {
-    memScoped {
-        return this@toKString.value!!.toKString(autoFree)
-    }
+    return this@toKString.value!!.toKString(autoFree)
 }
 
 /**
