@@ -93,10 +93,11 @@ abstract class InputContext(defaultFontHeight: Int) : IInputContext {
         external get
         external set
 
-    //InputProcessor
-    protected external fun getActiveInputProcessor(): InputProcessorProfile
+    //InputProcessor setter
     protected external fun setActiveInputProcessor(profile: InputProcessorProfile)
 
+    //Initial getters
+    protected external fun getActiveInputProcessor(): InputProcessorProfile
     protected external fun getIMState(): IIMState
     protected external fun getConversionMode(): List<IConversionMode>
     protected external fun getSentenceMode(): List<ISentenceMode>
