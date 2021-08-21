@@ -6,10 +6,7 @@ typealias HWND = Int
  * Create InputContext for the calling thread
  *
  * @param defaultFontHeight [ingameIME.context.composition.PreEdit.defaultFontHeight]
- *
- * @Note Context should be thread local
- * @Note A thread can create at most one context
- * @Note Once disposed, you can't recreate once more
+ * @see IInputContext
  */
 class InputContextWin32(defaultFontHeight: Int) : InputContext(defaultFontHeight) {
     init {

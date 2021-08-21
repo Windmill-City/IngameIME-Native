@@ -33,10 +33,7 @@ lateinit var instanceOfInputContext: InputContext
  * Create Input Context for calling thread
  *
  * @param defaultFontHeight [ingameIME.context.composition.PreEdit.defaultFontHeight]
- *
- * @Note Context should be thread local
- * @Note A thread can create at most one context
- * @Note Once disposed, you can't recreate once more
+ * @see IInputContext
  */
 class InputContext(defaultFontHeight: Int) : IInputContext {
     val nativeContext: libtf_pInputContextVar = nativeHeap.alloc()

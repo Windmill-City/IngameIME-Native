@@ -13,9 +13,9 @@ import ingameIME.utils.ListenableHolder
 /**
  * Input Context - Manage input method state
  *
- * @Note Context should be thread local
+ * @Note Context should be thread local, you can't use it in another thread
  * @Note A thread can create at most one context
- * @Note Once disposed, you can't recreate once more
+ * @Note Once disposed, you can't recreate once more on the same thread
  */
 interface IInputContext : IDispose {
     /**
