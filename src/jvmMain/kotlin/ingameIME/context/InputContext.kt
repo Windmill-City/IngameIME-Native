@@ -21,6 +21,15 @@ import ingameIME.utils.ListenableHolder
  */
 @Suppress("LeakingThis", "MemberVisibilityCanBePrivate")
 abstract class InputContext(defaultFontHeight: Int) : IInputContext {
+    init {
+        initialize()
+    }
+
+    /**
+     * Initialize Context
+     */
+    private external fun initialize()
+
     /**
      * [AComposition] of the context
      */

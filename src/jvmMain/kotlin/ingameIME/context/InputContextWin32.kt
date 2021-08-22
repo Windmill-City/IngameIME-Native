@@ -9,15 +9,6 @@ typealias HWND = Int
  * @see IInputContext
  */
 class InputContextWin32(defaultFontHeight: Int) : InputContext(defaultFontHeight) {
-    init {
-        initialize()
-    }
-
-    /**
-     * Initialize Context
-     */
-    private external fun initialize()
-
     /**
      * It's required to call this method to set the correct input method state,
      * when the window received WM_SETFOCUS or WM_KILLFOCUS
