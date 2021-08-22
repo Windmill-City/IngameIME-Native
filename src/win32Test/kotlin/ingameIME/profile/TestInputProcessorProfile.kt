@@ -58,7 +58,7 @@ class TestInputProcessorProfile {
             profile.guidProfile.Data4[6] = 0x15.toUByte()
             profile.guidProfile.Data4[7] = 0xd7.toUByte()
 
-            tipMicrosoftPinyin = TextService(profile)
+            tipMicrosoftPinyin = profile.toWrappedProfile()
         }
         run {
             val profile: libtf_InputProcessorProfile_t = nativeHeap.alloc()
@@ -70,7 +70,7 @@ class TestInputProcessorProfile {
             //HKL of American Keyboard
             profile.hkl = 0x0409_0409.toLong().toCPointer()
 
-            hklAmericanKeyboard = KeyboardLayout(profile)
+            hklAmericanKeyboard = profile.toWrappedProfile()
         }
     }
 
@@ -115,13 +115,5 @@ class TestInputProcessorProfile {
     fun testHashCode() {
         assertEquals(-672159701, tipMicrosoftPinyin.hashCode())
         assertEquals(67699721, hklAmericanKeyboard.hashCode())
-    }
-
-    @Test
-    fun testDispose() {
-        assertTrue { !tipMicrosoftPinyin.disposed }
-        assertFails { tipMicrosoftPinyin.disposed = false }
-        tipMicrosoftPinyin.disposed = true
-        assertTrue { tipMicrosoftPinyin.disposed }
     }
 }

@@ -2,6 +2,7 @@ package ingameIME.profile
 
 import ingameIME.win32.*
 import kotlinx.cinterop.*
+import platform.posix.memcpy
 import platform.win32.libtf.*
 import platform.windows.BSTRVar
 
@@ -18,7 +19,8 @@ actual fun Locale.getName(): String {
     }
 }
 
-abstract class InputProcessorProfile(val nativeProfile: libtf_InputProcessorProfile_t) : IInputProcessorProfile {
+abstract class InputProcessorProfile(val nativeProfile: CValue<libtf_InputProcessorProfile_t>) :
+    IInputProcessorProfile {
     /**
      * Locale of the profile
      */
@@ -26,7 +28,7 @@ abstract class InputProcessorProfile(val nativeProfile: libtf_InputProcessorProf
         get() {
             memScoped {
                 val locale: BSTRVar = this.alloc()
-                libtf_get_input_processor_locale(nativeProfile.readValue(), locale.ptr).succeedOrThr()
+                libtf_get_input_processor_locale(nativeProfile, locale.ptr).succeedOrThr()
                 return locale.toKString()
             }
         }
@@ -38,55 +40,45 @@ abstract class InputProcessorProfile(val nativeProfile: libtf_InputProcessorProf
         get() {
             memScoped {
                 val name: BSTRVar = this.alloc()
-                libtf_get_input_processor_desc(nativeProfile.readValue(), name.ptr).succeedOrThr()
+                libtf_get_input_processor_desc(nativeProfile, name.ptr).succeedOrThr()
                 return name.toKString()
             }
         }
-
-    /**
-     * Set to true to dispose the native handle
-     */
-    override var disposed: Boolean = false
-        set(value) {
-            if (!value) throw Error("Set false to dispose")
-            nativeHeap.free(nativeProfile)
-            field = true
-        }
 }
 
-class KeyboardLayout(nativeProfile: libtf_InputProcessorProfile_t) :
+class KeyboardLayout(nativeProfile: CValue<libtf_InputProcessorProfile_t>) :
     InputProcessorProfile(nativeProfile), IKeyBoardLayout {
     override fun toString(): String {
         return "InputProcessor[Win32][HKL][${
-            nativeProfile.hkl.toLong().toFormattedString()
+            nativeProfile.useContents { hkl.toLong().toFormattedString() }
         }][$locale][${locale.getName()}]:$name"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is InputProcessorProfile) return false
-        return other.nativeProfile.hkl.toLong() == this.nativeProfile.hkl.toLong()
+        return other.nativeProfile.useContents { hkl.toLong() } == this.nativeProfile.useContents { hkl.toLong() }
     }
 
     override fun hashCode(): Int {
-        return nativeProfile.hkl.toLong().hashCode()
+        return nativeProfile.useContents { hkl.toLong().hashCode() }
     }
 }
 
-class TextService(nativeProfile: libtf_InputProcessorProfile_t) :
+class TextService(nativeProfile: CValue<libtf_InputProcessorProfile_t>) :
     InputProcessorProfile(nativeProfile), IInputMethodProfile {
     override fun toString(): String {
-        return "InputProcessor[Win32][TIP][${nativeProfile.clsid.toFormattedString()}][$locale][${locale.getName()}]:$name"
+        return "InputProcessor[Win32][TIP][${nativeProfile.useContents { clsid.toFormattedString() }}][$locale][${locale.getName()}]:$name"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is InputProcessorProfile) return false
-        return other.nativeProfile.clsid.isEqual(this.nativeProfile.clsid)
+        return other.nativeProfile.useContents { clsid }.isEqual(this.nativeProfile.useContents { clsid })
     }
 
     override fun hashCode(): Int {
-        return nativeProfile.clsid.getHashCode()
+        return nativeProfile.useContents { clsid.getHashCode() }
     }
 }
 
@@ -94,9 +86,13 @@ class TextService(nativeProfile: libtf_InputProcessorProfile_t) :
  * Convert native profile to wrapped profile base on its type
  */
 fun libtf_InputProcessorProfile_t.toWrappedProfile(): InputProcessorProfile {
-    return when (profileType) {
-        TF_PROFILETYPE_INPUTPROCESSOR.toUInt() -> TextService(this)
-        TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt() -> KeyboardLayout(this)
-        else -> throw Error("Unsupported profile type:$profileType")
+    with(cValue<libtf_InputProcessorProfile_t> {
+        memcpy(this.ptr, this@toWrappedProfile.ptr, sizeOf<libtf_InputProcessorProfile_t>().toULong())
+    }) {
+        return when (profileType) {
+            TF_PROFILETYPE_INPUTPROCESSOR.toUInt() -> TextService(this)
+            TF_PROFILETYPE_KEYBOARDLAYOUT.toUInt() -> KeyboardLayout(this)
+            else -> throw Error("Unsupported profile type:$profileType")
+        }
     }
 }

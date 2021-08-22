@@ -1,7 +1,5 @@
 package ingameIME.profile
 
-import ingameIME.utils.IDispose
-
 typealias Locale = String
 
 /**
@@ -12,7 +10,7 @@ expect fun Locale.getName(): String
 /**
  * Profile of an input processor, can be input method or keyboard layout
  */
-interface IInputProcessorProfile : IDispose {
+interface IInputProcessorProfile {
     /**
      * Locale of the profile
      */
@@ -40,13 +38,4 @@ interface IKeyBoardLayout : IInputProcessorProfile
 object UnknownInputProcessorProfile : IInputProcessorProfile {
     override val locale: Locale get() = "en"
     override val name: String get() = "[Fallback Value]Unknown Input Processor"
-
-    /**
-     * Set to true to dispose the native handle
-     */
-    override var disposed: Boolean
-        get() = false
-        set(@Suppress("UNUSED_PARAMETER") value) {
-            /* No native handle */
-        }
 }

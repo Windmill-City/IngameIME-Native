@@ -13,7 +13,6 @@ import ingameIME.profile.IInputProcessorProfile
 import ingameIME.profile.toWrappedProfile
 import ingameIME.win32.succeedOrThr
 import kotlinx.cinterop.*
-import platform.posix.memcpy
 import platform.posix.uint32_tVar
 import platform.win32.libtf.libtf_InputProcessorProfile_t
 import platform.win32.libtf.libtf_get_input_processors
@@ -36,11 +35,7 @@ object IngameIME : IIngameIME {
                 //Store data
                 val result = mutableListOf<IInputProcessorProfile>()
                 for (i in 0 until fetched.value.toInt())
-                    profiles[i].apply {
-                        val profile: libtf_InputProcessorProfile_t = nativeHeap.alloc()
-                        memcpy(profile.ptr, profiles[i].ptr, sizeOf<libtf_InputProcessorProfile_t>().toULong())
-                        result.add(profile.toWrappedProfile())
-                    }
+                    result.add(profiles[i].toWrappedProfile())
                 return result
             }
         }

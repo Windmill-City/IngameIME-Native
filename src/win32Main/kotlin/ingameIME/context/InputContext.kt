@@ -17,7 +17,6 @@ import ingameIME.utils.ListenableHolder
 import ingameIME.win32.succeedOrThr
 import ingameIME.win32.toKString
 import kotlinx.cinterop.*
-import platform.posix.memcpy
 import platform.win32.libtf.*
 import platform.windows.HWND
 import platform.zlib.voidpVar
@@ -125,18 +124,16 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
         libtf_create_ctx(nativeContext.ptr).succeedOrThr()
 
         //Initial active inputProcessor
-        inputProcessor = run {
-            val profile: libtf_InputProcessorProfile_t = nativeHeap.alloc()
+        inputProcessor = memScoped {
+            val profile: libtf_InputProcessorProfile_t = this.alloc()
             libtf_get_active_input_processor(profile.ptr).succeedOrThr()
             object : ListenableHolder<IInputProcessorProfile>(profile.toWrappedProfile()) {
                 override fun setProperty(newValue: IInputProcessorProfile) {
-                    libtf_set_active_input_processor((newValue as InputProcessorProfile).nativeProfile.readValue()).succeedOrThr()
+                    libtf_set_active_input_processor((newValue as InputProcessorProfile).nativeProfile).succeedOrThr()
                     super.setProperty(newValue)
                 }
             }
         }
-        //Dispose old profile
-        inputProcessor.append { old, new -> old.disposed = true; return@append new }
 
         //Initial imState
         imState = memScoped {
@@ -277,11 +274,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
             staticCFunction { profile: libtf_InputProcessorProfile_t, _: voidpVar ->
                 if (profile.activated)
                     with(instanceOfInputContext) {
-                        //Copy data to heap
-                        val heapProfile: libtf_InputProcessorProfile_t = nativeHeap.alloc()
-                        memcpy(heapProfile.ptr, profile.ptr, sizeOf<libtf_InputProcessorProfile_t>().toULong())
-
-                        with(heapProfile.toWrappedProfile()) {
+                        with(profile.toWrappedProfile()) {
                             inputProcessor.onChange(inputProcessor.getProperty(), this)
                             inputProcessor.setPropertyInternal(this)
                         }

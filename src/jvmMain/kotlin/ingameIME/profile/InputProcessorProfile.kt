@@ -17,11 +17,4 @@ class InputProcessorProfile : IInputProcessorProfile {
      */
     override val name: String
         external get
-
-    /**
-     * Set to true to dispose the native handle
-     */
-    override var disposed: Boolean
-        external get
-        external set
 }
