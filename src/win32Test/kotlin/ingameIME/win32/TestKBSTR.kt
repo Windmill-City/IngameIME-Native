@@ -14,7 +14,7 @@ class TestKBSTR {
 
     @Test
     fun testKStr2BSTR() {
-        "String".withBSTR {
+        "String".useBSTR {
             assertEquals("String", it.toKString(false))
         }
     }

@@ -36,7 +36,7 @@ fun BSTRVar.toKString(autoFree: Boolean = true): String {
 /**
  * Convert String to BSTR for use, and release it automatically after use
  */
-inline fun String.withBSTR(action: (bstr: BSTR) -> Unit) {
+inline fun String.useBSTR(action: (bstr: BSTR) -> Unit) {
     val bstr = SysAllocStringLen(wcstr, length.toUInt()) ?: throw Error("Out of memory")
     action(bstr)
     bstr.free()

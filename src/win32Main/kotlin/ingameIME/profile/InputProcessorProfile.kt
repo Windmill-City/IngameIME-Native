@@ -12,7 +12,7 @@ import platform.windows.BSTRVar
 actual fun Locale.getName(): String {
     memScoped {
         val name: BSTRVar = this.alloc()
-        this@getName.withBSTR {
+        this@getName.useBSTR {
             libtf_get_locale_name(it, name.ptr).succeedOrThr()
         }
         return name.toKString()
