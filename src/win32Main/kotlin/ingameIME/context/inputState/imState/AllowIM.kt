@@ -3,7 +3,6 @@ package ingameIME.context.inputState.imState
 import ingameIME.context.IInputContext
 import ingameIME.context.InputContext
 import ingameIME.win32.succeedOrThr
-import kotlinx.cinterop.value
 import platform.win32.libtf.libtf_set_im_state
 
 /**
@@ -11,6 +10,6 @@ import platform.win32.libtf.libtf_set_im_state
  */
 object AllowIM : IAllowIM {
     override fun onApplyState(context: IInputContext) {
-        libtf_set_im_state((context as InputContext).nativeContext.value, true).succeedOrThr()
+        libtf_set_im_state((context as InputContext).nativeContext, true).succeedOrThr()
     }
 }

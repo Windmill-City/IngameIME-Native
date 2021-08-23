@@ -4,7 +4,6 @@ import ingameIME.context.IInputContext
 import ingameIME.context.InputContext
 import ingameIME.win32.succeedOrThr
 import kotlinx.cinterop.memScoped
-import kotlinx.cinterop.value
 import platform.win32.libtf.TF_CONVERSIONMODE_ALPHANUMERIC
 import platform.win32.libtf.libtf_ConversionMode
 import platform.win32.libtf.libtf_set_conversion_mode
@@ -21,7 +20,7 @@ object AlphaNumericMode : IAlphaNumericMode, ITfConversionMode {
         (context as InputContext).also {
             memScoped {
                 libtf_set_conversion_mode(
-                    it.nativeContext.value,
+                    it.nativeContext,
                     TF_CONVERSIONMODE_ALPHANUMERIC
                 ).succeedOrThr()
             }

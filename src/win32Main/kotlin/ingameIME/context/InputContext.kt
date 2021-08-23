@@ -35,7 +35,12 @@ lateinit var instanceOfInputContext: InputContext
  * @see IInputContext
  */
 class InputContext(defaultFontHeight: Int) : IInputContext {
-    val nativeContext: libtf_pInputContextVar = nativeHeap.alloc()
+    val nativeContext: libtf_pInputContext = memScoped {
+        with(alloc<libtf_pInputContextVar>()) {
+            libtf_create_ctx(ptr).succeedOrThr()
+            value!!
+        }
+    }
 
     /**
      * [AComposition] of the context
@@ -98,12 +103,12 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
         get() {
             return memScoped {
                 val curState: BooleanVar = this.alloc()
-                libtf_get_full_screen(nativeContext.value, curState.ptr).succeedOrThr()
+                libtf_get_full_screen(nativeContext, curState.ptr).succeedOrThr()
                 curState.value
             }
         }
         set(value) {
-            libtf_set_full_screen(nativeContext.value, value).succeedOrThr()
+            libtf_set_full_screen(nativeContext, value).succeedOrThr()
         }
 
     /**
@@ -114,15 +119,12 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
             if (!value) throw Error("Set false to dispose")
 
             //Dispose native context
-            libtf_dispose_ctx(nativeContext.value).succeedOrThr()
+            libtf_dispose_ctx(nativeContext).succeedOrThr()
 
             field = value
         }
 
     init {
-        //Create native context
-        libtf_create_ctx(nativeContext.ptr).succeedOrThr()
-
         //Initial active inputProcessor
         inputProcessor = memScoped {
             val profile: libtf_InputProcessorProfile_t = this.alloc()
@@ -138,21 +140,21 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
         //Initial imState
         imState = memScoped {
             val curState: BooleanVar = this.alloc()
-            libtf_get_im_state(nativeContext.value, curState.ptr).succeedOrThr()
+            libtf_get_im_state(nativeContext, curState.ptr).succeedOrThr()
             StateHolder(this@InputContext, if (curState.value) IngameIME.defaultAllowIM else IngameIME.defaultForbidIM)
         }
 
         //Initial Conversion State
         conversionMode = memScoped {
             val curMode: libtf_ConversionModeVar = this.alloc()
-            libtf_get_conversion_mode(nativeContext.value, curMode.ptr).succeedOrThr()
+            libtf_get_conversion_mode(nativeContext, curMode.ptr).succeedOrThr()
             MultiStateHolder(this@InputContext, curMode.value.toWrappedConversionMode())
         }
 
         //Initial Sentence State
         sentenceMode = memScoped {
             val curMode: libtf_SentenceModeVar = this.alloc()
-            libtf_get_sentence_mode(nativeContext.value, curMode.ptr).succeedOrThr()
+            libtf_get_sentence_mode(nativeContext, curMode.ptr).succeedOrThr()
             MultiStateHolder(this@InputContext, curMode.value.toWrappedSentenceMode())
         }
 
@@ -160,7 +162,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
         instanceOfInputContext = this
         //Composition - PreEdit
         libtf_set_composition_callback(
-            nativeContext.value,
+            nativeContext,
             staticCFunction { composition: libtf_Composition_t, _: voidpVar ->
                 with(instanceOfInputContext) {
                     when (composition.state) {
@@ -185,7 +187,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
 
         //Composition - Commit
         libtf_set_commit_callback(
-            nativeContext.value, staticCFunction { commit: libtf_Commit, _: voidpVar ->
+            nativeContext, staticCFunction { commit: libtf_Commit, _: voidpVar ->
                 with(instanceOfInputContext) {
                     this.composition.commit.setProperty(commit.toKString(false))
                 }
@@ -194,7 +196,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
 
         //Composition - Bounding Box
         libtf_set_bounding_box_callback(
-            nativeContext.value, staticCFunction { rect: libtf_BoundingBox_t, _: voidpVar ->
+            nativeContext, staticCFunction { rect: libtf_BoundingBox_t, _: voidpVar ->
                 with(instanceOfInputContext) {
                     with(this.composition.preEdit.boundingBox) {
                         rect.left = this.x
@@ -208,7 +210,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
 
         //Composition - CandidateList
         libtf_set_candidate_list_callback(
-            nativeContext.value, staticCFunction { candidateList: libtf_CandidateList_t, _: voidpVar ->
+            nativeContext, staticCFunction { candidateList: libtf_CandidateList_t, _: voidpVar ->
                 with(instanceOfInputContext) {
                     when (candidateList.state) {
                         libtf_CandidateListState.libtf_CandidateListBegin, libtf_CandidateListState.libtf_CandidateListEnd ->
@@ -240,7 +242,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
 
         //Conversion Mode
         libtf_set_conversion_mode_callback(
-            nativeContext.value, staticCFunction { mode: libtf_ConversionMode, _: voidpVar ->
+            nativeContext, staticCFunction { mode: libtf_ConversionMode, _: voidpVar ->
                 with(instanceOfInputContext) {
                     val wrappedMode = mode.toWrappedConversionMode()
                         .filterNot {
@@ -258,7 +260,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
 
         //Sentence Mode
         libtf_set_sentence_mode_callback(
-            nativeContext.value, staticCFunction { mode: libtf_SentenceMode, _: voidpVar ->
+            nativeContext, staticCFunction { mode: libtf_SentenceMode, _: voidpVar ->
                 with(instanceOfInputContext) {
                     with(mode.toWrappedSentenceMode()) {
                         sentenceMode.onChange(sentenceMode.getProperty(), this)
@@ -270,7 +272,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
 
         //InputProcessor
         libtf_set_input_processor_callback(
-            nativeContext.value,
+            nativeContext,
             staticCFunction { profile: libtf_InputProcessorProfile_t, _: voidpVar ->
                 if (profile.activated)
                     with(instanceOfInputContext) {
@@ -291,6 +293,6 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
      * @param msg can be WM_SETFOCUS or WM_KILLFOCUS
      */
     fun onWindowFocusMsg(hWnd: HWND, msg: UInt) {
-        libtf_on_focus_msg(nativeContext.value, hWnd, msg).succeedOrThr()
+        libtf_on_focus_msg(nativeContext, hWnd, msg).succeedOrThr()
     }
 }

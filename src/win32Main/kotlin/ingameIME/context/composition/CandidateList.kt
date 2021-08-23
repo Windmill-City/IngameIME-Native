@@ -2,7 +2,6 @@ package ingameIME.context.composition
 
 import ingameIME.context.InputContext
 import ingameIME.win32.succeedOrThr
-import kotlinx.cinterop.value
 import platform.win32.libtf.libtf_final_candidate_list_sel
 import platform.win32.libtf.libtf_set_candidate_list_sel
 
@@ -19,7 +18,7 @@ class CandidateList(val inputContext: InputContext) : ACandidateList() {
      * @Note should in the range of [ACandidateList.Context.displayRange]
      */
     override fun setSelection(index: Int) {
-        libtf_set_candidate_list_sel(inputContext.nativeContext.value, index.toUInt()).succeedOrThr()
+        libtf_set_candidate_list_sel(inputContext.nativeContext, index.toUInt()).succeedOrThr()
     }
 
     /**
@@ -34,6 +33,6 @@ class CandidateList(val inputContext: InputContext) : ACandidateList() {
      * @Note should in the range of [ACandidateList.Context.displayRange]
      */
     override fun setFinalize(index: Int) {
-        libtf_final_candidate_list_sel(inputContext.nativeContext.value, index.toUInt()).succeedOrThr()
+        libtf_final_candidate_list_sel(inputContext.nativeContext, index.toUInt()).succeedOrThr()
     }
 }
