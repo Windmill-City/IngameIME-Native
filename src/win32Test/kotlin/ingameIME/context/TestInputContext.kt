@@ -45,10 +45,12 @@ class TestInputContext {
             //CandidateList
             with(context.composition.candidateList) {
                 context.append { _, new ->
-                    if (new.displayRange == IntRange.EMPTY) println("Empty CandidateList")
-                    for (i in new.displayRange) {
-                        val candidate = new.content[i]
-                        println("[${getDisplayIndex(new, candidate)}]$candidate")
+                    with(new) {
+                        if (displayRange == IntRange.EMPTY) println("Empty CandidateList")
+                        for (i in displayRange) {
+                            val candidate = content[i]
+                            println("[${getDisplayIndex(candidate)}]$candidate")
+                        }
                     }
                     return@append new
                 }
