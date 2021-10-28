@@ -1,7 +1,7 @@
 @file:Suppress("UNUSED_VARIABLE")
 
 plugins {
-    kotlin("multiplatform") version "1.5.21"
+    kotlin("multiplatform") version "1.5.31"
 }
 
 group = "city.windmill"
@@ -94,7 +94,7 @@ kotlin {
                         api("com.kgl:kgl-stb:$kglVersion")
                     }
 
-                    tasks.register<Copy>("copyLibtf") {
+                    tasks.create<Copy>("copyLibtf") {
                         with(tasks["win32Test"]) {
                             val dstDir =
                                 inputs.files.filter { it.endsWith("test.exe") }.asPath.substringBeforeLast("\\")
