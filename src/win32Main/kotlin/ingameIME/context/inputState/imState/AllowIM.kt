@@ -10,6 +10,6 @@ import platform.win32.libtf.libtf_set_im_state
  */
 object AllowIM : IAllowIM {
     override fun onApplyState(context: IInputContext) {
-        libtf_set_im_state((context as InputContext).nativeContext, true).succeedOrThr()
+        libtf_set_im_state((context as InputContext).nativeContext, true).succeedOrThr("Allowing InputMethod")
     }
 }

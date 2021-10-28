@@ -37,7 +37,7 @@ lateinit var instanceOfInputContext: InputContext
 class InputContext(defaultFontHeight: Int) : IInputContext {
     val nativeContext: libtf_pInputContext = memScoped {
         with(alloc<libtf_pInputContextVar>()) {
-            libtf_create_ctx(ptr).succeedOrThr()
+            libtf_create_ctx(ptr).succeedOrThr("Creating InputContext")
             value!!
         }
     }
@@ -103,12 +103,12 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
         get() {
             return memScoped {
                 val curState: BooleanVar = this.alloc()
-                libtf_get_full_screen(nativeContext, curState.ptr).succeedOrThr()
+                libtf_get_full_screen(nativeContext, curState.ptr).succeedOrThr("Getting full screen state")
                 curState.value
             }
         }
         set(value) {
-            libtf_set_full_screen(nativeContext, value).succeedOrThr()
+            libtf_set_full_screen(nativeContext, value).succeedOrThr("Setting full screen state")
         }
 
     /**
@@ -119,7 +119,7 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
             if (!value) throw Error("Set false to dispose")
 
             //Dispose native context
-            libtf_dispose_ctx(nativeContext).succeedOrThr()
+            libtf_dispose_ctx(nativeContext).succeedOrThr("Disposing InputContext")
 
             field = value
         }
@@ -128,10 +128,10 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
         //Initial active inputProcessor
         inputProcessor = memScoped {
             val profile: libtf_InputProcessorProfile_t = this.alloc()
-            libtf_get_active_input_processor(profile.ptr).succeedOrThr()
+            libtf_get_active_input_processor(profile.ptr).succeedOrThr("Getting active InputProcessor")
             object : ListenableHolder<IInputProcessorProfile>(profile.toWrappedProfile()) {
                 override fun setProperty(newValue: IInputProcessorProfile) {
-                    libtf_set_active_input_processor((newValue as InputProcessorProfile).nativeProfile).succeedOrThr()
+                    libtf_set_active_input_processor((newValue as InputProcessorProfile).nativeProfile).succeedOrThr("Setting active InputProcessor")
                     super.setProperty(newValue)
                 }
             }
@@ -140,21 +140,21 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
         //Initial imState
         imState = memScoped {
             val curState: BooleanVar = this.alloc()
-            libtf_get_im_state(nativeContext, curState.ptr).succeedOrThr()
+            libtf_get_im_state(nativeContext, curState.ptr).succeedOrThr("Getting InputMethod state")
             StateHolder(this@InputContext, if (curState.value) IngameIME.defaultAllowIM else IngameIME.defaultForbidIM)
         }
 
         //Initial Conversion State
         conversionMode = memScoped {
             val curMode: libtf_ConversionModeVar = this.alloc()
-            libtf_get_conversion_mode(nativeContext, curMode.ptr).succeedOrThr()
+            libtf_get_conversion_mode(nativeContext, curMode.ptr).succeedOrThr("Getting Conversion mode")
             MultiStateHolder(this@InputContext, curMode.value.toWrappedConversionMode())
         }
 
         //Initial Sentence State
         sentenceMode = memScoped {
             val curMode: libtf_SentenceModeVar = this.alloc()
-            libtf_get_sentence_mode(nativeContext, curMode.ptr).succeedOrThr()
+            libtf_get_sentence_mode(nativeContext, curMode.ptr).succeedOrThr("Getting Sentence mode")
             MultiStateHolder(this@InputContext, curMode.value.toWrappedSentenceMode())
         }
 
@@ -293,6 +293,6 @@ class InputContext(defaultFontHeight: Int) : IInputContext {
      * @param msg can be WM_SETFOCUS or WM_KILLFOCUS
      */
     fun onWindowFocusMsg(hWnd: HWND, msg: UInt) {
-        libtf_on_focus_msg(nativeContext, hWnd, msg).succeedOrThr()
+        libtf_on_focus_msg(nativeContext, hWnd, msg).succeedOrThr("On window focus msg")
     }
 }

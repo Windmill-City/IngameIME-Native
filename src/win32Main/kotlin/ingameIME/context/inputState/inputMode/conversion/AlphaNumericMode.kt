@@ -22,7 +22,7 @@ object AlphaNumericMode : IAlphaNumericMode, ITfConversionMode {
                 libtf_set_conversion_mode(
                     it.nativeContext,
                     TF_CONVERSIONMODE_ALPHANUMERIC
-                ).succeedOrThr()
+                ).succeedOrThr("Set to AlphaNumeric mode")
             }
         }
     }

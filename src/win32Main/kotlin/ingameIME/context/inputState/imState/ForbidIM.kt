@@ -10,6 +10,6 @@ import platform.win32.libtf.libtf_set_im_state
  */
 object ForbidIM : IForbidIM {
     override fun onApplyState(context: IInputContext) {
-        libtf_set_im_state((context as InputContext).nativeContext, false).succeedOrThr()
+        libtf_set_im_state((context as InputContext).nativeContext, false).succeedOrThr("Forbidding InputMethod")
     }
 }

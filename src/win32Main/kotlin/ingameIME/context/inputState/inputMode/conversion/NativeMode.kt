@@ -21,9 +21,9 @@ object NativeMode : INativeMode, ITfConversionMode {
         (context as InputContext).also {
             memScoped {
                 val mode: libtf_ConversionModeVar = this.alloc()
-                libtf_get_conversion_mode(it.nativeContext, mode.ptr).succeedOrThr()
+                libtf_get_conversion_mode(it.nativeContext, mode.ptr).succeedOrThr("Getting Conversion mode")
                 mode.value = mode.value or TF_CONVERSIONMODE_NATIVE
-                libtf_set_conversion_mode(it.nativeContext, mode.value).succeedOrThr()
+                libtf_set_conversion_mode(it.nativeContext, mode.value).succeedOrThr("Set to Native")
             }
         }
     }

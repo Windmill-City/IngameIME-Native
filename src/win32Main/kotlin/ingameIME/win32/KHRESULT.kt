@@ -21,10 +21,15 @@ inline fun HRESULT.ifFailed(callback: (HRESULT) -> Unit) {
 }
 
 /**
+ * Throws when Libtf call failed
+ */
+class LibtfError(result: HRESULT, message: String?) : RuntimeException("HR=${result}:$message")
+
+/**
  * Throw an exception on failure
  */
-inline fun HRESULT.succeedOrThr(message: String = "Failed") {
-    this.ifFailed { throw Error("$message->HRESULT:${this}") }
+inline fun HRESULT.succeedOrThr(message: String?) {
+    this.ifFailed { throw LibtfError(this, message) }
 }
 
 /**

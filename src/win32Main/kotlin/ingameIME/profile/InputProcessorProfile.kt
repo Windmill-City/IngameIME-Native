@@ -13,7 +13,7 @@ actual fun Locale.getName(): String {
     memScoped {
         val name: BSTRVar = this.alloc()
         this@getName.useBSTR {
-            libtf_get_locale_name(it, name.ptr).succeedOrThr()
+            libtf_get_locale_name(it, name.ptr).succeedOrThr("Getting localized name of Locale")
         }
         return name.toKString()
     }
@@ -28,7 +28,10 @@ abstract class InputProcessorProfile(val nativeProfile: CValue<libtf_InputProces
         get() {
             memScoped {
                 val locale: BSTRVar = this.alloc()
-                libtf_get_input_processor_locale(nativeProfile, locale.ptr).succeedOrThr()
+                libtf_get_input_processor_locale(
+                    nativeProfile,
+                    locale.ptr
+                ).succeedOrThr("Getting Locale of InputProcessor")
                 return locale.toKString()
             }
         }
@@ -40,7 +43,10 @@ abstract class InputProcessorProfile(val nativeProfile: CValue<libtf_InputProces
         get() {
             memScoped {
                 val name: BSTRVar = this.alloc()
-                libtf_get_input_processor_desc(nativeProfile, name.ptr).succeedOrThr()
+                libtf_get_input_processor_desc(
+                    nativeProfile,
+                    name.ptr
+                ).succeedOrThr("Getting localized name of InputProcessor")
                 return name.toKString()
             }
         }

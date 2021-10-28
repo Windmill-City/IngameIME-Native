@@ -33,7 +33,7 @@ class TestKHRESULT {
         }
         run {
             var calls = 0
-            assertEquals("Test->HRESULT:$E_FAIL", assertFails { E_FAIL.succeedOrThr("Test") }.message)
+            assertEquals("HR=$E_FAIL:Test", assertFails { E_FAIL.succeedOrThr("Test") }.message)
             S_OK.succeedOrThr("Test")
             S_OK.ifSucceedOrThr("Test") { calls++ }
             assertFails { E_FAIL.ifSucceedOrThr("Test") { calls++ } }
