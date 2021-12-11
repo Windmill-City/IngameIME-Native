@@ -9,14 +9,20 @@ version = "0.1.0"
 
 repositories {
     mavenCentral()
-    maven("https://maven.pkg.github.com/Dominaezzz/kgl") {
-        credentials {
-            //Your GitHub Email
-            username = System.getenv("GITHUB_USER")
-            //Your GitHub Access token with permission read_pkg
-            password = System.getenv("GITHUB_TOKEN")
+    mavenLocal()
+    maven("https://maven.pkg.github.com/Dominaezzz/kgl")
+    maven("https://maven.pkg.github.com/Windmill-City/KNI")
+
+    filterIsInstance<MavenArtifactRepository>()
+        .filter { it.url.host == "maven.pkg.github.com" }
+        .onEach {
+            it.credentials {
+                //Your GitHub Email
+                username = System.getenv("GITHUB_USER")
+                //Your GitHub Access token with permission read_pkg
+                password = System.getenv("GITHUB_TOKEN_READ_PKG")
+            }
         }
-    }
 }
 
 kotlin {

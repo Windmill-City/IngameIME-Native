@@ -10,6 +10,6 @@ class Composition(val inputContext: InputContext, preEdit: PreEdit, candidateLis
      * Terminate active composition
      */
     override fun terminate() {
-        libtf_terminate_composition(inputContext.nativeContext).succeedOrThr("Terminating composition")
+        libtf_terminate_composition(inputContext.nativeContext).succeedOrThr("libtf_terminate_composition")
     }
 }

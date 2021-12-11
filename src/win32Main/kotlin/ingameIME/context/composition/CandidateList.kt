@@ -18,7 +18,10 @@ class CandidateList(val inputContext: InputContext) : ACandidateList() {
      * @Note should in the range of [ACandidateList.Context.displayRange]
      */
     override fun setSelection(index: Int) {
-        libtf_set_candidate_list_sel(inputContext.nativeContext, index.toUInt()).succeedOrThr("Setting selection")
+        libtf_set_candidate_list_sel(
+            inputContext.nativeContext,
+            index.toUInt()
+        ).succeedOrThr("libtf_set_candidate_list_sel")
     }
 
     /**
@@ -33,6 +36,9 @@ class CandidateList(val inputContext: InputContext) : ACandidateList() {
      * @Note should in the range of [ACandidateList.Context.displayRange]
      */
     override fun setFinalize(index: Int) {
-        libtf_final_candidate_list_sel(inputContext.nativeContext, index.toUInt()).succeedOrThr("Finalizing selection")
+        libtf_final_candidate_list_sel(
+            inputContext.nativeContext,
+            index.toUInt()
+        ).succeedOrThr("libtf_final_candidate_list_sel")
     }
 }

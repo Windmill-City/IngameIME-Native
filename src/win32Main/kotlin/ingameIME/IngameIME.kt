@@ -26,7 +26,7 @@ object IngameIME : IIngameIME {
             memScoped {
                 //Get data size first
                 val fetched: uint32_tVar = this.alloc()
-                libtf_get_input_processors(null, 0, fetched.ptr).succeedOrThr("Getting InputProcessor count")
+                libtf_get_input_processors(null, 0, fetched.ptr).succeedOrThr("libtf_get_input_processors")
 
                 //Alloc buffer and get data
                 val profiles = this.allocArray<libtf_InputProcessorProfile_t>(fetched.value.toInt())
@@ -34,7 +34,7 @@ object IngameIME : IIngameIME {
                     profiles,
                     fetched.value,
                     fetched.ptr
-                ).succeedOrThr("Fetching InputProcessor data")
+                ).succeedOrThr("libtf_get_input_processors")
 
                 //Store data
                 val result = mutableListOf<IInputProcessorProfile>()

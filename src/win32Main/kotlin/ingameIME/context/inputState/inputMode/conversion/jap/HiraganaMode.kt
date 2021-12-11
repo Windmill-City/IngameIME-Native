@@ -22,10 +22,10 @@ object HiraganaMode : IHiraganaMode, ITfConversionMode {
         (context as InputContext).also {
             memScoped {
                 val mode: libtf_ConversionModeVar = this.alloc()
-                libtf_get_conversion_mode(it.nativeContext, mode.ptr).succeedOrThr("Getting Conversion mode")
+                libtf_get_conversion_mode(it.nativeContext, mode.ptr).succeedOrThr("libtf_get_conversion_mode")
                 mode.value =
                     mode.value and TF_CONVERSIONMODE_KATAKANA.inv() and TF_CONVERSIONMODE_ROMAN.inv()
-                libtf_set_conversion_mode(it.nativeContext, mode.value).succeedOrThr("Set to Hiragana")
+                libtf_set_conversion_mode(it.nativeContext, mode.value).succeedOrThr("libtf_set_conversion_mode")
             }
         }
     }
